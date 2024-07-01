@@ -1,0 +1,31 @@
+## String to be pasted verbatim into generated bindings
+preamble: |
+  // Copyright 2024 Adrian Verban
+
+android_sdk_config:
+  add_gradle_deps: true
+  android_example: 'example/'
+
+# summarizer:
+#   backend: asm
+source_path:
+  - 'android/src/main/'
+class_path:
+  - 'android/libs/ZSDK_ANDROID_API.jar'
+  - 'android/libs/ZSDK_ANDROID_BTLE.jar'
+
+output:
+  dart:
+    path: 'lib/src/android/'
+
+log_level: all
+
+classes:
+  - 'co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth'
+  - 'co.fieldos.zebra_link_os.ZebraLinkOsPlugin'
+  - 'com.zebra.sdk.printer.discovery.DiscoveredPrinter'
+  - 'com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth'
+
+enable_experiment:
+  - interface_implementation
+

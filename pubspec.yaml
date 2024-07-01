@@ -1,0 +1,30 @@
+name: zebra_link_os
+description: "A new Flutter plugin project."
+version: 0.0.1
+# homepage: null
+publish_to: 'none'
+
+environment:
+  sdk: ">=3.3.4 <4.0.0"
+  flutter: ">=3.3.0"
+
+flutter:
+  plugin:
+    implements: zebra_platform_interface
+    platforms:
+      android:
+        ffiPlugin: true
+        dartPluginClass: ZebraLinkOs
+
+dependencies:
+  flutter:
+    sdk: flutter
+  jni: ^0.9.2
+  permission_handler: ^11.3.1
+  plugin_platform_interface: ^2.1.8
+
+dev_dependencies:
+  flutter_lints: ^3.0.0
+  flutter_test:
+    sdk: flutter
+  jnigen: ^0.9.2
