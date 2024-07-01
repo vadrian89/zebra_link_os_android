@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:zebra_link_os/core.dart';
+import 'package:zebra_link_os_android/core.dart';
 
 /// Base class used to handle for the discovery process.
 ///

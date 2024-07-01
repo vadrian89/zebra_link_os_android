@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:jni/jni.dart';
-import 'package:zebra_link_os/core.dart';
-import 'package:zebra_link_os/permissions.dart';
-import 'package:zebra_link_os/src/android/classes/jni_utils.dart';
-import 'package:zebra_link_os/src/android/co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth.dart';
+import 'package:zebra_link_os_android/core.dart';
+import 'package:zebra_link_os_android/permissions.dart';
+import 'package:zebra_link_os_android/src/android/classes/jni_utils.dart';
+import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth.dart';
 
 import '../core/classes/discovery_handler_base.dart';
 import 'co/fieldos/zebra_link_os/_package.dart' as g;

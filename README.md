@@ -1,4 +1,4 @@
-# zebra_link_os
+# zebra_link_os_android
 
 A new Flutter plugin project.
 

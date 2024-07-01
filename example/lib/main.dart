@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:zebra_link_os/core.dart';
-import 'package:zebra_link_os/zebra_link_os.dart';
+import 'package:zebra_link_os_android/core.dart';
+import 'package:zebra_link_os_android/zebra_link_os.dart';
 
 void main() {
   runApp(const MyApp());

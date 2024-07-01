@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:zebra_link_os/src/android/zebra_link_os_android.dart';
+import 'package:zebra_link_os_android/src/android/zebra_link_os_android.dart';
 
 import 'core.dart';
 
