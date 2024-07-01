@@ -12,14 +12,17 @@ class ZebraLinkOs {
   /// Called when the SDK reports that it has finished discovering printers.
   final VoidCallback? onFinished;
 
-  ZebraLinkOs({this.onError, this.onFinished});
+  ZebraLinkOs({this.onError, this.onFinished}) {
+    final instance = ZebraLinkOsPlatform.instance;
+    if (instance is ZebraLinkOsAndroid) {
+      instance.onError = onError;
+      instance.onFinished = onFinished;
+    }
+  }
 
   /// Register this dart class as the platform implementation
   static void registerWith() {
-    ZebraLinkOsPlatform.instance = ZebraLinkOsAndroid(
-      onFinished: () => print("Discovery finished"),
-      onError: (value) => print("Discovery error: $value"),
-    );
+    ZebraLinkOsPlatform.instance = ZebraLinkOsAndroid();
   }
 
   Future<bool> requestPermissions() => _instance.requestPermissions();

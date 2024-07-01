@@ -29,10 +29,10 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
       __printerFoundController ??= StreamController<DiscoveredPrinterBluetooth>.broadcast();
 
   /// Called when an error occurs while trying to discover printers.
-  final ValueChanged<DiscoveredPrinterError>? onError;
+  ValueChanged<DiscoveredPrinterError>? onError;
 
   /// Called when the SDK reports that it has finished discovering printers.
-  final VoidCallback? onFinished;
+  VoidCallback? onFinished;
 
   @override
   Stream<DiscoveredPrinterBluetooth> get printerFound => _printerFoundController.stream;
