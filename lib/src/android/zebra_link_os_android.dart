@@ -61,8 +61,8 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
 
   @override
   Future<void> dispose() async {
-    __plugin?.release();
-    __plugin = null;
+    await __printerFoundController?.close();
+    __printerFoundController = null;
   }
 
   @override
