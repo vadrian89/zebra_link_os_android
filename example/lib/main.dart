@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:zebra_link_os_android/core.dart';
-import 'package:zebra_link_os_android/zebra_link_os.dart';
+import 'package:zebra_link_os_android/zebra_link_os_android.dart';
 
 void main() {
   runApp(const MyApp());
@@ -107,7 +107,7 @@ class _MyAppState extends State<MyApp> {
 
   void _printTest() {
     var string = "! 0 200 200 210 1\r\n";
-    string += "TEXT 4 0 30 40 Ola Field OS!!!!\r\n";
+    string += "TEXT 4 0 30 40 Ola Field OS!!1\r\n";
     string += "PRINT\r\n";
     _plugin.write(string: string, printer: _selectedPrinter!);
   }

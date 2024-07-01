@@ -97,6 +97,57 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .check();
   }
 
+  static final _id_printImage = _class.instanceMethodId(
+    r"printImage",
+    r"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V",
+  );
+
+  static final _printImage = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<
+                      (
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>
+                      )>)>>("globalEnv_CallVoidMethod")
+      .asFunction<
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>,
+              jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>)>();
+
+  /// from: public final void printImage(java.lang.String string, java.lang.String string1, java.lang.Integer integer, java.lang.Integer integer1, java.lang.Integer integer2, java.lang.Integer integer3)
+  void printImage(
+    jni.JString string,
+    jni.JString string1,
+    jni.JInteger integer,
+    jni.JInteger integer1,
+    jni.JInteger integer2,
+    jni.JInteger integer3,
+  ) {
+    _printImage(
+            reference.pointer,
+            _id_printImage as jni.JMethodIDPtr,
+            string.reference.pointer,
+            string1.reference.pointer,
+            integer.reference.pointer,
+            integer1.reference.pointer,
+            integer2.reference.pointer,
+            integer3.reference.pointer)
+        .check();
+  }
+
   static final _id_writeString = _class.instanceMethodId(
     r"writeString",
     r"(Ljava/lang/String;Ljava/lang/String;)V",
