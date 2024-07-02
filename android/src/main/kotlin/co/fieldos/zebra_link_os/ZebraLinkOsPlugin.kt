@@ -2,6 +2,7 @@ package co.fieldos.zebra_link_os
 
 import android.content.Context
 import android.util.Log
+import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth
 import kotlinx.coroutines.delay
@@ -54,7 +55,8 @@ class ZebraLinkOsPlugin(
             try {
                 connection.open()
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
-                effectivePrinter.printImage(filePath, x ?: 0, y ?: 0, width, height, false)
+                val image = ZebraImageAndroid(filePath)
+                effectivePrinter.printImage(image, x ?: 0, y ?: 0, width, height, false)
                 delay(500L)
             } catch (e: Exception) {
                 e.printStackTrace()
