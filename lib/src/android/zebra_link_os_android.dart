@@ -70,6 +70,24 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
         JString.fromString(printer.address),
         JString.fromString(string),
       );
+
+  @override
+  void printImage({
+    required DiscoveredPrinter printer,
+    required String filePath,
+    required int width,
+    required int height,
+    int? x,
+    int? y,
+  }) =>
+      _plugin.printImage(
+        JString.fromString(printer.address),
+        JString.fromString(filePath),
+        JInteger(width),
+        JInteger(height),
+        JInteger(x ?? 0),
+        JInteger(y ?? 0),
+      );
 }
 
 class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase

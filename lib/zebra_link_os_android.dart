@@ -35,4 +35,21 @@ class ZebraLinkOs {
 
   void write({required String string, required DiscoveredPrinter printer}) =>
       _instance.write(string: string, printer: printer);
+
+  void printImage({
+    required DiscoveredPrinter printer,
+    required String filePath,
+    required int width,
+    required int height,
+    int? x,
+    int? y,
+  }) =>
+      _instance.printImage(
+        printer: printer,
+        filePath: filePath,
+        width: width,
+        height: height,
+        x: x,
+        y: y,
+      );
 }

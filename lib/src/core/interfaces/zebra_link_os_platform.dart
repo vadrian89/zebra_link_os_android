@@ -27,6 +27,15 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
   Future<bool> requestPermissions();
 
   void write({required String string, required DiscoveredPrinter printer});
+
+  void printImage({
+    required DiscoveredPrinter printer,
+    required String filePath,
+    required int width,
+    required int height,
+    int? x,
+    int? y,
+  });
 }
 
 /// Default implementation of the ZebraLinkOsPlatform.
@@ -45,5 +54,16 @@ class _ZebraLinkOsDefault extends ZebraLinkOsPlatform {
 
   @override
   void write({required String string, required DiscoveredPrinter printer}) =>
+      throw UnimplementedError();
+
+  @override
+  void printImage({
+    required DiscoveredPrinter printer,
+    required String filePath,
+    required int width,
+    required int height,
+    int? x,
+    int? y,
+  }) =>
       throw UnimplementedError();
 }
