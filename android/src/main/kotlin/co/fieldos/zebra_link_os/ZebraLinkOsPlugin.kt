@@ -2,6 +2,7 @@ package co.fieldos.zebra_link_os
 
 import android.content.Context
 import android.util.Log
+import com.zebra.sdk.comm.BluetoothConnection
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth
@@ -16,6 +17,7 @@ class ZebraLinkOsPlugin(
 ) {
     private lateinit var discoverer: PrinterDiscovererBluetooth
     private val printers: MutableList<DiscoveredPrinterBluetooth> = mutableListOf()
+    private var connection: BluetoothConnection? = null
 
     private fun initDiscoverer() {
         discoverer = PrinterDiscovererBluetooth(
@@ -25,7 +27,22 @@ class ZebraLinkOsPlugin(
         )
     }
 
-    private fun printerFromAddress(address: String) = printers.find { printer -> printer.address == address }
+    private fun maybeConnect(address: String) {
+        if (connection?.macAddress == address) return
+        if (connection?.isConnected == true) connection!!.close()
+        connection = BluetoothConnection(address)
+        connection!!.open()
+    }
+
+    fun disconnect() {
+        try {
+            connection?.close()
+        } catch (e: Exception) {
+            Log.e("ZebraLinkOsPlugin", "Error closing connection", e)
+            e.printStackTrace()
+        }
+        connection = null
+    }
 
     fun findPrinters() {
         try {
@@ -34,35 +51,16 @@ class ZebraLinkOsPlugin(
             discoverer.findPrinters(context)
         } catch (e: Exception) {
             discoveryHandler.onError(e.message ?: "Unknown error")
+            Log.e("ZebraLinkOsPlugin", "Error finding printers", e)
             e.printStackTrace()
+            disconnect()
         }
     }
 
     /// Print an image to a printer
     fun printImage(address: String, filePath: String, x: Int?, y: Int?, width: Int?, height: Int?) {
-        val printer = printerFromAddress(address)
-        if (printer == null) {
-            Log.w("ZebraLinkOsPlugin", "Printer, with address: $address, not found")
-            return
-        }
-        printImage(printer, filePath, x, y, width ?: 0, height ?: 0)
-    }
-
-    private fun printImage(printer: DiscoveredPrinterBluetooth, filePath: String, x: Int?, y: Int?, width: Int, height: Int) = runBlocking {
-        launch {
-            Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
-            val connection = printer.connection
-            try {
-                connection.open()
-                val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
-                val image = ZebraImageAndroid(filePath)
-                effectivePrinter.printImage(image, x ?: 0, y ?: 0, width, height, false)
-                delay(500L)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-            connection.close()
-        }
+        maybeConnect(address)
+        printImage(filePath, x, y, width ?: 0, height ?: 0)
     }
 
     // Write the string to a printer.
@@ -70,31 +68,39 @@ class ZebraLinkOsPlugin(
     // The string should contain either ZPL or CPL commands.
     // The address should be the bluetooth/MAC address of the printer.
     fun writeString(address: String, string: String) {
-        val printer = printerFromAddress(address)
-        if (printer == null) {
-            Log.w("ZebraLinkOsPlugin", "Printer, with address: $address, not found")
-            return
-        }
-        Log.w("ZebraLinkOsPlugin", "Printing to $printer")
-        write(printer, string)
+        maybeConnect(address)
+        write(string)
     }
 
-    private fun write(printer: DiscoveredPrinterBluetooth, string: String ) = runBlocking {
+    private fun printImage(filePath: String, x: Int?, y: Int?, width: Int, height: Int) = runBlocking {
         launch {
-            Log.d("ZebraLinkOsPlugin", "Printing: $string")
-            val connection = printer.connection
+            Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
             try {
-                connection.open()
-                connection.write(string.toByteArray())
+                val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
+                val image = ZebraImageAndroid(filePath)
+                effectivePrinter.printImage(image, x ?: 0, y ?: 0, width, height, false)
                 delay(500L)
             } catch (e: Exception) {
+                Log.e("ZebraLinkOsPlugin", "Error printing image", e)
                 e.printStackTrace()
+                disconnect()
             }
-            connection.close()
         }
     }
 
-
+    private fun write(string: String ) = runBlocking {
+        launch {
+            Log.d("ZebraLinkOsPlugin", "Printing: $string")
+            try {
+                connection!!.write(string.toByteArray())
+                delay(500L)
+            } catch (e: Exception) {
+                Log.e("ZebraLinkOsPlugin", "Error printing string", e)
+                e.printStackTrace()
+                disconnect()
+            }
+        }
+    }
 
     private fun onFound(printer: DiscoveredPrinterBluetooth) {
         printers.add(printer)

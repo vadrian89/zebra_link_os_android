@@ -74,6 +74,28 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .reference);
   }
 
+  static final _id_disconnect = _class.instanceMethodId(
+    r"disconnect",
+    r"()V",
+  );
+
+  static final _disconnect = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                ffi.Pointer<ffi.Void>,
+                jni.JMethodIDPtr,
+              )>>("globalEnv_CallVoidMethod")
+      .asFunction<
+          jni.JThrowablePtr Function(
+            ffi.Pointer<ffi.Void>,
+            jni.JMethodIDPtr,
+          )>();
+
+  /// from: public final void disconnect()
+  void disconnect() {
+    _disconnect(reference.pointer, _id_disconnect as jni.JMethodIDPtr).check();
+  }
+
   static final _id_findPrinters = _class.instanceMethodId(
     r"findPrinters",
     r"()V",

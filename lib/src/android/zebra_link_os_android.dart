@@ -64,12 +64,6 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   Future<void> findPrinters() async => _plugin.findPrinters();
 
   @override
-  Future<void> dispose() async {
-    await __printerFoundController?.close();
-    __printerFoundController = null;
-  }
-
-  @override
   void write({required String string, required DiscoveredPrinter printer}) =>
       _plugin.writeString(
         JString.fromString(printer.address),
@@ -93,6 +87,13 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
         JInteger(x ?? 0),
         JInteger(y ?? 0),
       );
+
+  @override
+  Future<void> dispose() async {
+    __plugin?.disconnect();
+    await __printerFoundController?.close();
+    __printerFoundController = null;
+  }
 }
 
 class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase
