@@ -44,7 +44,7 @@ class ZebraLinkOsPlugin(
             Log.w("ZebraLinkOsPlugin", "Printer, with address: $address, not found")
             return
         }
-
+        printImage(printer, filePath, x, y, width ?: 0, height ?: 0)
     }
 
     private fun printImage(printer: DiscoveredPrinterBluetooth, filePath: String, x: Int?, y: Int?, width: Int, height: Int) = runBlocking {
