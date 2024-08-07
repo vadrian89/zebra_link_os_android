@@ -35,6 +35,7 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
     int height = 0,
     int x = 0,
     int y = 0,
+    bool insideFormat = false,
   });
 }
 
@@ -64,6 +65,7 @@ class _ZebraLinkOsDefault extends ZebraLinkOsPlatform {
     int height = 0,
     int x = 0,
     int y = 0,
+    bool insideFormat = false,
   }) =>
       throw UnimplementedError();
 }

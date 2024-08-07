@@ -43,6 +43,7 @@ class ZebraLinkOs {
     int height = 0,
     int x = 0,
     int y = 0,
+    bool insideFormat = false,
   }) =>
       _instance.printImage(
         printer: printer,
@@ -51,5 +52,6 @@ class ZebraLinkOs {
         height: height,
         x: x,
         y: y,
+        insideFormat: insideFormat,
       );
 }

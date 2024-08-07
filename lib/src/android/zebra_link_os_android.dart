@@ -16,8 +16,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   g.ZebraLinkOsPlugin get _plugin => __plugin ??= g.ZebraLinkOsPlugin(
         JniUtils.context,
         DiscoveryHandlerBluetooth.implement(_DiscoveryHandlerBluetooth(
-          onDiscoveryError: (value) =>
-              onError?.call(DiscoveredPrinterError(message: value)),
+          onDiscoveryError: (value) => onError?.call(DiscoveredPrinterError(message: value)),
           onDiscoveryFinished: () => onFinished?.call(),
           onFoundPrinter: (value) => _printerFoundController.sink.add(
             value as DiscoveredPrinterBluetooth,
@@ -27,8 +26,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
 
   StreamController<DiscoveredPrinterBluetooth>? __printerFoundController;
   StreamController<DiscoveredPrinterBluetooth> get _printerFoundController =>
-      __printerFoundController ??=
-          StreamController<DiscoveredPrinterBluetooth>.broadcast();
+      __printerFoundController ??= StreamController<DiscoveredPrinterBluetooth>.broadcast();
 
   /// Called when an error occurs while trying to discover printers.
   ValueChanged<DiscoveredPrinterError>? onError;
@@ -37,8 +35,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   VoidCallback? onFinished;
 
   @override
-  Stream<DiscoveredPrinterBluetooth> get printerFound =>
-      _printerFoundController.stream;
+  Stream<DiscoveredPrinterBluetooth> get printerFound => _printerFoundController.stream;
 
   ZebraLinkOsAndroid({
     this.onError,
@@ -54,8 +51,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
     if (!isEnabled) return false;
     final isScanGranted = await BluetoothPermissions.isScanPermissionGranted;
     if (!isScanGranted) return false;
-    final isConnectGranted =
-        await BluetoothPermissions.isConnectPermissionGranted;
+    final isConnectGranted = await BluetoothPermissions.isConnectPermissionGranted;
     if (!isConnectGranted) return false;
     return await BluetoothPermissions.isLocationPermissionGranted;
   }
@@ -64,8 +60,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   Future<void> findPrinters() async => _plugin.findPrinters();
 
   @override
-  void write({required String string, required DiscoveredPrinter printer}) =>
-      _plugin.writeString(
+  void write({required String string, required DiscoveredPrinter printer}) => _plugin.writeString(
         JString.fromString(printer.address),
         JString.fromString(string),
       );
@@ -78,6 +73,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
     int height = 0,
     int x = 0,
     int y = 0,
+    bool insideFormat = false,
   }) =>
       _plugin.printImage(
         JString.fromString(printer.address),
@@ -86,6 +82,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
         y,
         width,
         height,
+        insideFormat,
       );
 
   @override
