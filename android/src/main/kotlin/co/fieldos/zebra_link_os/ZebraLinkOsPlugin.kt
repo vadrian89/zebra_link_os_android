@@ -58,9 +58,9 @@ class ZebraLinkOsPlugin(
     }
 
     /// Print an image to a printer
-    fun printImage(address: String, filePath: String, x: Int?, y: Int?, width: Int?, height: Int?) {
+    fun printImage(address: String, filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0) {
         maybeConnect(address)
-        printImage(filePath, x, y, width ?: 0, height ?: 0)
+        printImage(filePath, x, y, width, height)
     }
 
     // Write the string to a printer.
@@ -72,13 +72,13 @@ class ZebraLinkOsPlugin(
         write(string)
     }
 
-    private fun printImage(filePath: String, x: Int?, y: Int?, width: Int, height: Int) = runBlocking {
+    private fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0) = runBlocking {
         launch {
             Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
             try {
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
                 val image = ZebraImageAndroid(filePath)
-                effectivePrinter.printImage(image, x ?: 0, y ?: 0, width, height, false)
+                effectivePrinter.printImage(image, x, y, width, height, false)
                 delay(500L)
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error printing image", e)

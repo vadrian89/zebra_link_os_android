@@ -39,10 +39,10 @@ class ZebraLinkOs {
   void printImage({
     required DiscoveredPrinter printer,
     required String filePath,
-    required int width,
-    required int height,
-    int? x,
-    int? y,
+    int width = 0,
+    int height = 0,
+    int x = 0,
+    int y = 0,
   }) =>
       _instance.printImage(
         printer: printer,

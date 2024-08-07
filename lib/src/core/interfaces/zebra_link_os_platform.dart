@@ -31,10 +31,10 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
   void printImage({
     required DiscoveredPrinter printer,
     required String filePath,
-    required int width,
-    required int height,
-    int? x,
-    int? y,
+    int width = 0,
+    int height = 0,
+    int x = 0,
+    int y = 0,
   });
 }
 
@@ -60,10 +60,10 @@ class _ZebraLinkOsDefault extends ZebraLinkOsPlatform {
   void printImage({
     required DiscoveredPrinter printer,
     required String filePath,
-    required int width,
-    required int height,
-    int? x,
-    int? y,
+    int width = 0,
+    int height = 0,
+    int x = 0,
+    int y = 0,
   }) =>
       throw UnimplementedError();
 }

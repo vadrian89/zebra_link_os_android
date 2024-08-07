@@ -74,18 +74,18 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   void printImage({
     required DiscoveredPrinter printer,
     required String filePath,
-    required int width,
-    required int height,
-    int? x,
-    int? y,
+    int width = 0,
+    int height = 0,
+    int x = 0,
+    int y = 0,
   }) =>
       _plugin.printImage(
         JString.fromString(printer.address),
         JString.fromString(filePath),
-        JInteger(width),
-        JInteger(height),
-        JInteger(x ?? 0),
-        JInteger(y ?? 0),
+        x,
+        y,
+        width,
+        height,
       );
 
   @override

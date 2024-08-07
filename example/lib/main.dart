@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:zebra_link_os_android/core.dart';
 import 'package:zebra_link_os_android/zebra_link_os_android.dart';
 
@@ -94,6 +97,16 @@ class _MyAppState extends State<MyApp> {
                     ),
                     ElevatedButton(
                       onPressed: switch (snapshot.connectionState) {
+                        ConnectionState.done =>
+                          (snapshot.data == true) && (_selectedPrinter != null)
+                              ? _printTestImage
+                              : null,
+                        _ => null,
+                      },
+                      child: const Text("Print image"),
+                    ),
+                    ElevatedButton(
+                      onPressed: switch (snapshot.connectionState) {
                         ConnectionState.done => snapshot.data == true ? _findPrinters : null,
                         _ => null,
                       },
@@ -104,6 +117,17 @@ class _MyAppState extends State<MyApp> {
               );
             }),
       );
+
+  Future<void> _printTestImage() async {
+    final bytes = await rootBundle.load("assets/print-test.png");
+    final dir = await getApplicationDocumentsDirectory();
+    final filePath = "${dir.path}/print-test.png";
+    final file = await File(filePath).writeAsBytes(bytes.buffer.asUint8List());
+    _plugin.printImage(
+      printer: _selectedPrinter!,
+      filePath: file.path,
+    );
+  }
 
   void _printTest() {
     var string = "! 0 200 200 210 1\r\n";

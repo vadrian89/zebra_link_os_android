@@ -121,7 +121,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
 
   static final _id_printImage = _class.instanceMethodId(
     r"printImage",
-    r"(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;)V",
+    r"(Ljava/lang/String;Ljava/lang/String;IIII)V",
   );
 
   static final _printImage = ProtectedJniExtensions.lookup<
@@ -133,10 +133,10 @@ class ZebraLinkOsPlugin extends jni.JObject {
                       (
                         ffi.Pointer<ffi.Void>,
                         ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>
+                        ffi.Int32,
+                        ffi.Int32,
+                        ffi.Int32,
+                        ffi.Int32
                       )>)>>("globalEnv_CallVoidMethod")
       .asFunction<
           jni.JThrowablePtr Function(
@@ -144,29 +144,22 @@ class ZebraLinkOsPlugin extends jni.JObject {
               jni.JMethodIDPtr,
               ffi.Pointer<ffi.Void>,
               ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>)>();
+              int,
+              int,
+              int,
+              int)>();
 
-  /// from: public final void printImage(java.lang.String string, java.lang.String string1, java.lang.Integer integer, java.lang.Integer integer1, java.lang.Integer integer2, java.lang.Integer integer3)
+  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3)
   void printImage(
     jni.JString string,
     jni.JString string1,
-    jni.JInteger integer,
-    jni.JInteger integer1,
-    jni.JInteger integer2,
-    jni.JInteger integer3,
+    int i,
+    int i1,
+    int i2,
+    int i3,
   ) {
-    _printImage(
-            reference.pointer,
-            _id_printImage as jni.JMethodIDPtr,
-            string.reference.pointer,
-            string1.reference.pointer,
-            integer.reference.pointer,
-            integer1.reference.pointer,
-            integer2.reference.pointer,
-            integer3.reference.pointer)
+    _printImage(reference.pointer, _id_printImage as jni.JMethodIDPtr,
+            string.reference.pointer, string1.reference.pointer, i, i1, i2, i3)
         .check();
   }
 
