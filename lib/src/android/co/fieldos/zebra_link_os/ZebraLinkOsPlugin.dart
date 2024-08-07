@@ -121,7 +121,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
 
   static final _id_printImage = _class.instanceMethodId(
     r"printImage",
-    r"(Ljava/lang/String;Ljava/lang/String;IIIIZ)V",
+    r"(Ljava/lang/String;Ljava/lang/String;IIIII)V",
   );
 
   static final _printImage = ProtectedJniExtensions.lookup<
@@ -137,7 +137,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
                         ffi.Int32,
                         ffi.Int32,
                         ffi.Int32,
-                        ffi.Uint8
+                        ffi.Int32
                       )>)>>("globalEnv_CallVoidMethod")
       .asFunction<
           jni.JThrowablePtr Function(
@@ -151,7 +151,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
               int,
               int)>();
 
-  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3, boolean z)
+  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3, int i4)
   void printImage(
     jni.JString string,
     jni.JString string1,
@@ -159,7 +159,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
     int i1,
     int i2,
     int i3,
-    bool z,
+    int i4,
   ) {
     _printImage(
             reference.pointer,
@@ -170,7 +170,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
             i1,
             i2,
             i3,
-            z ? 1 : 0)
+            i4)
         .check();
   }
 

@@ -82,7 +82,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
         y,
         width,
         height,
-        insideFormat,
+        insideFormat ? 1 : 0,
       );
 
   @override

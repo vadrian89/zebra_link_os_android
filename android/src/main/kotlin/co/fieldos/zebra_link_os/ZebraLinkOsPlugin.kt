@@ -58,9 +58,9 @@ class ZebraLinkOsPlugin(
     }
 
     /// Print an image to a printer
-    fun printImage(address: String, filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Boolean = false) {
+    fun printImage(address: String, filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0) {
         maybeConnect(address)
-        printImage(filePath, x, y, width, height, insideFormat)
+        printImage(filePath, x, y, width, height, insideFormat == 1)
     }
 
     // Write the string to a printer.
