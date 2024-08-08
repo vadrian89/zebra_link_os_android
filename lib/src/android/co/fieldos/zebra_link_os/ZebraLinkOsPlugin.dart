@@ -27,6 +27,8 @@ import "package:jni/jni.dart" as jni;
 
 import "DiscoveryHandlerBluetooth.dart" as discoveryhandlerbluetooth_;
 
+import "ResultCallbacksInterface.dart" as resultcallbacksinterface_;
+
 /// from: co.fieldos.zebra_link_os.ZebraLinkOsPlugin
 class ZebraLinkOsPlugin extends jni.JObject {
   @override
@@ -74,26 +76,29 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .reference);
   }
 
-  static final _id_disconnect = _class.instanceMethodId(
-    r"disconnect",
-    r"()V",
+  static final _id_close = _class.instanceMethodId(
+    r"close",
+    r"(Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
-  static final _disconnect = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
-              )>>("globalEnv_CallVoidMethod")
+  static final _close = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          "globalEnv_CallVoidMethod")
       .asFunction<
-          jni.JThrowablePtr Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
-          )>();
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void disconnect()
-  void disconnect() {
-    _disconnect(reference.pointer, _id_disconnect as jni.JMethodIDPtr).check();
+  /// from: public final void close(co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
+  void close(
+    resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
+  ) {
+    _close(reference.pointer, _id_close as jni.JMethodIDPtr,
+            resultCallbacksInterface.reference.pointer)
+        .check();
   }
 
   static final _id_findPrinters = _class.instanceMethodId(
@@ -121,7 +126,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
 
   static final _id_printImage = _class.instanceMethodId(
     r"printImage",
-    r"(Ljava/lang/String;Ljava/lang/String;IIIII)V",
+    r"(Ljava/lang/String;Ljava/lang/String;IIIIILco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
   static final _printImage = ProtectedJniExtensions.lookup<
@@ -137,7 +142,8 @@ class ZebraLinkOsPlugin extends jni.JObject {
                         ffi.Int32,
                         ffi.Int32,
                         ffi.Int32,
-                        ffi.Int32
+                        ffi.Int32,
+                        ffi.Pointer<ffi.Void>
                       )>)>>("globalEnv_CallVoidMethod")
       .asFunction<
           jni.JThrowablePtr Function(
@@ -149,9 +155,10 @@ class ZebraLinkOsPlugin extends jni.JObject {
               int,
               int,
               int,
-              int)>();
+              int,
+              ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3, int i4)
+  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3, int i4, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
   void printImage(
     jni.JString string,
     jni.JString string1,
@@ -160,6 +167,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
     int i2,
     int i3,
     int i4,
+    resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
     _printImage(
             reference.pointer,
@@ -170,13 +178,14 @@ class ZebraLinkOsPlugin extends jni.JObject {
             i1,
             i2,
             i3,
-            i4)
+            i4,
+            resultCallbacksInterface.reference.pointer)
         .check();
   }
 
   static final _id_writeString = _class.instanceMethodId(
     r"writeString",
-    r"(Ljava/lang/String;Ljava/lang/String;)V",
+    r"(Ljava/lang/String;Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
   static final _writeString = ProtectedJniExtensions.lookup<
@@ -187,19 +196,29 @@ class ZebraLinkOsPlugin extends jni.JObject {
                   ffi.VarArgs<
                       (
                         ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>,
                         ffi.Pointer<ffi.Void>
                       )>)>>("globalEnv_CallVoidMethod")
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+          jni.JThrowablePtr Function(
+              ffi.Pointer<ffi.Void>,
+              jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>,
+              ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void writeString(java.lang.String string, java.lang.String string1)
+  /// from: public final void writeString(java.lang.String string, java.lang.String string1, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
   void writeString(
     jni.JString string,
     jni.JString string1,
+    resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
-    _writeString(reference.pointer, _id_writeString as jni.JMethodIDPtr,
-            string.reference.pointer, string1.reference.pointer)
+    _writeString(
+            reference.pointer,
+            _id_writeString as jni.JMethodIDPtr,
+            string.reference.pointer,
+            string1.reference.pointer,
+            resultCallbacksInterface.reference.pointer)
         .check();
   }
 }

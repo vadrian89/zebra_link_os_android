@@ -6,8 +6,10 @@ import 'package:zebra_link_os_android/core.dart';
 import 'package:zebra_link_os_android/permissions.dart';
 import 'package:zebra_link_os_android/src/android/classes/jni_utils.dart';
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth.dart';
+import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/ResultCallbacksInterface.dart';
 
 import '../core/classes/discovery_handler_base.dart';
+import '../core/classes/zebra_link_os_exception.dart';
 import 'co/fieldos/zebra_link_os/_package.dart' as g;
 import 'com/zebra/sdk/printer/discovery/_package.dart' as z;
 
@@ -60,13 +62,24 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   Future<void> findPrinters() async => _plugin.findPrinters();
 
   @override
-  void write({required String string, required DiscoveredPrinter printer}) => _plugin.writeString(
-        JString.fromString(printer.address),
-        JString.fromString(string),
-      );
+  Future<bool> write({required String string, required DiscoveredPrinter printer}) {
+    final Completer<bool> completer = Completer<bool>();
+    _plugin.writeString(
+      JString.fromString(printer.address),
+      JString.fromString(string),
+      _resultCallback(
+        (result) => completer.complete(true),
+        (message) => throw ZebraWriteException(
+          message: message,
+          stackTrace: StackTrace.current,
+        ),
+      ),
+    );
+    return completer.future;
+  }
 
   @override
-  void printImage({
+  Future<bool> printImage({
     required DiscoveredPrinter printer,
     required String filePath,
     int width = 0,
@@ -74,23 +87,58 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
     int x = 0,
     int y = 0,
     bool insideFormat = false,
-  }) =>
-      _plugin.printImage(
-        JString.fromString(printer.address),
-        JString.fromString(filePath),
-        x,
-        y,
-        width,
-        height,
-        insideFormat ? 1 : 0,
-      );
+  }) {
+    final Completer<bool> completer = Completer<bool>();
+    _plugin.printImage(
+      JString.fromString(printer.address),
+      JString.fromString(filePath),
+      x,
+      y,
+      width,
+      height,
+      insideFormat ? 1 : 0,
+      _resultCallback(
+        (result) => completer.complete(true),
+        (message) => throw ZebraPrintImageException(
+          message: message,
+          stackTrace: StackTrace.current,
+        ),
+      ),
+    );
+    return completer.future;
+  }
 
   @override
   Future<void> dispose() async {
-    __plugin?.disconnect();
+    __plugin?.close(_resultCallback());
     await __printerFoundController?.close();
     __printerFoundController = null;
   }
+
+  ResultCallbacksInterface _resultCallback([
+    void Function(String result)? onSuccessEmitted,
+    void Function(String message)? onErrorEmitted,
+  ]) =>
+      ResultCallbacksInterface.implement(_ResultCallbacks(
+        onSuccessEmitted: onSuccessEmitted,
+        onErrorEmitted: onErrorEmitted,
+      ));
+}
+
+class _ResultCallbacks implements g.$ResultCallbacksInterfaceImpl {
+  final ValueChanged<String>? onErrorEmitted;
+  final ValueChanged<String>? onSuccessEmitted;
+
+  const _ResultCallbacks({
+    this.onErrorEmitted,
+    this.onSuccessEmitted,
+  });
+
+  @override
+  void onError(JString string) => onErrorEmitted?.call(string.toDartString());
+
+  @override
+  void onSuccess(JString string) => onSuccessEmitted?.call(string.toDartString());
 }
 
 class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase

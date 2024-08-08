@@ -34,12 +34,14 @@ class ZebraLinkOsPlugin(
         connection!!.open()
     }
 
-    fun disconnect() {
+    fun disconnect(callbacks: ResultCallbacksInterface?) {
         try {
             connection?.close()
+            callbacks?.onSuccess("")
         } catch (e: Exception) {
             Log.e("ZebraLinkOsPlugin", "Error closing connection", e)
             e.printStackTrace()
+            callbacks?.onError(e.message ?: "Unknown error")
         }
         connection = null
     }
@@ -53,26 +55,26 @@ class ZebraLinkOsPlugin(
             discoveryHandler.onError(e.message ?: "Unknown error")
             Log.e("ZebraLinkOsPlugin", "Error finding printers", e)
             e.printStackTrace()
-            disconnect()
+            disconnect(null)
         }
     }
 
     /// Print an image to a printer
-    fun printImage(address: String, filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0) {
+    fun printImage(address: String, filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0, callbacks: ResultCallbacksInterface) {
         maybeConnect(address)
-        printImage(filePath, x, y, width, height, insideFormat == 1)
+        printImage(filePath, x, y, width, height, insideFormat == 1, callbacks)
     }
 
     // Write the string to a printer.
     //
     // The string should contain either ZPL or CPL commands.
     // The address should be the bluetooth/MAC address of the printer.
-    fun writeString(address: String, string: String) {
+    fun writeString(address: String, string: String, callbacks: ResultCallbacksInterface) {
         maybeConnect(address)
-        write(string)
+        write(string, callbacks)
     }
 
-    private fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Boolean = false) = runBlocking {
+    private fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Boolean = false, callbacks: ResultCallbacksInterface) = runBlocking {
         launch {
             Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
             try {
@@ -80,24 +82,28 @@ class ZebraLinkOsPlugin(
                 val image = ZebraImageAndroid(filePath)
                 effectivePrinter.printImage(image, x, y, width, height, insideFormat)
                 delay(500L)
+                callbacks.onSuccess("")
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error printing image", e)
                 e.printStackTrace()
-                disconnect()
+                callbacks.onError(e.message ?: "Unknown error")
+                disconnect(null)
             }
         }
     }
 
-    private fun write(string: String ) = runBlocking {
+    private fun write(string: String, callbacks: ResultCallbacksInterface) = runBlocking {
         launch {
             Log.d("ZebraLinkOsPlugin", "Printing: $string")
             try {
                 connection!!.write(string.toByteArray())
                 delay(500L)
+                callbacks.onSuccess("")
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error printing string", e)
                 e.printStackTrace()
-                disconnect()
+                callbacks.onError(e.message ?: "Unknown error")
+                disconnect(null)
             }
         }
     }

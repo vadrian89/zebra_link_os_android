@@ -26,9 +26,9 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
   /// Returns [true] if the device is enabled and has the necessary permissions, otherwise [false].
   Future<bool> requestPermissions();
 
-  void write({required String string, required DiscoveredPrinter printer});
+  Future<bool> write({required String string, required DiscoveredPrinter printer});
 
-  void printImage({
+  Future<bool> printImage({
     required DiscoveredPrinter printer,
     required String filePath,
     int width = 0,
@@ -54,11 +54,11 @@ class _ZebraLinkOsDefault extends ZebraLinkOsPlatform {
   Stream<DiscoveredPrinter> get printerFound => throw UnimplementedError();
 
   @override
-  void write({required String string, required DiscoveredPrinter printer}) =>
+  Future<bool> write({required String string, required DiscoveredPrinter printer}) =>
       throw UnimplementedError();
 
   @override
-  void printImage({
+  Future<bool> printImage({
     required DiscoveredPrinter printer,
     required String filePath,
     int width = 0,
