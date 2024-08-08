@@ -25,18 +25,18 @@ class ZebraLinkOs {
     ZebraLinkOsPlatform.instance = ZebraLinkOsAndroid();
   }
 
-  Future<bool> requestPermissions() => _instance.requestPermissions();
+  Stream<DiscoveredPrinter> get printerFound => _instance.printerFound;
 
   Future<void> findPrinters() => _instance.findPrinters();
 
   Future<void> dispose() => _instance.dispose();
 
-  Stream<DiscoveredPrinter> get printerFound => _instance.printerFound;
+  Future<bool> requestPermissions() => _instance.requestPermissions();
 
-  void write({required String string, required DiscoveredPrinter printer}) =>
+  Future<bool> write({required String string, required DiscoveredPrinter printer}) =>
       _instance.write(string: string, printer: printer);
 
-  void printImage({
+  Future<bool> printImage({
     required DiscoveredPrinter printer,
     required String filePath,
     int width = 0,
