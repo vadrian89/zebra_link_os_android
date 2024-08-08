@@ -9,7 +9,6 @@ import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/Disco
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/ResultCallbacksInterface.dart';
 
 import '../core/classes/discovery_handler_base.dart';
-import '../core/classes/zebra_link_os_exception.dart';
 import 'co/fieldos/zebra_link_os/_package.dart' as g;
 import 'com/zebra/sdk/printer/discovery/_package.dart' as z;
 
@@ -110,7 +109,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
 
   @override
   Future<void> dispose() async {
-    __plugin?.close(_resultCallback());
+    __plugin?.disconnect(_resultCallback());
     await __printerFoundController?.close();
     __printerFoundController = null;
   }

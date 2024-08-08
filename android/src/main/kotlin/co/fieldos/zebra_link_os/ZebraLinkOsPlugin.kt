@@ -6,9 +6,10 @@ import com.zebra.sdk.comm.BluetoothConnection
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 
 
 class ZebraLinkOsPlugin(
@@ -18,6 +19,7 @@ class ZebraLinkOsPlugin(
     private lateinit var discoverer: PrinterDiscovererBluetooth
     private val printers: MutableList<DiscoveredPrinterBluetooth> = mutableListOf()
     private var connection: BluetoothConnection? = null
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     private fun initDiscoverer() {
         discoverer = PrinterDiscovererBluetooth(
@@ -74,8 +76,8 @@ class ZebraLinkOsPlugin(
         write(string, callbacks)
     }
 
-    private fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Boolean = false, callbacks: ResultCallbacksInterface) = runBlocking {
-        launch {
+    private fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Boolean = false, callbacks: ResultCallbacksInterface) {
+        mainScope.launch(Dispatchers.Default) {
             Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
             try {
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
@@ -92,8 +94,8 @@ class ZebraLinkOsPlugin(
         }
     }
 
-    private fun write(string: String, callbacks: ResultCallbacksInterface) = runBlocking {
-        launch {
+    private fun write(string: String, callbacks: ResultCallbacksInterface)  {
+        mainScope.launch(Dispatchers.Default) {
             Log.d("ZebraLinkOsPlugin", "Printing: $string")
             try {
                 connection!!.write(string.toByteArray())

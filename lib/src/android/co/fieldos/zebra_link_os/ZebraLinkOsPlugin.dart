@@ -76,12 +76,12 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .reference);
   }
 
-  static final _id_close = _class.instanceMethodId(
-    r"close",
+  static final _id_disconnect = _class.instanceMethodId(
+    r"disconnect",
     r"(Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
-  static final _close = ProtectedJniExtensions.lookup<
+  static final _disconnect = ProtectedJniExtensions.lookup<
               ffi.NativeFunction<
                   jni.JThrowablePtr Function(
                       ffi.Pointer<ffi.Void>,
@@ -92,11 +92,11 @@ class ZebraLinkOsPlugin extends jni.JObject {
           jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
               ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void close(co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
-  void close(
+  /// from: public final void disconnect(co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
+  void disconnect(
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
-    _close(reference.pointer, _id_close as jni.JMethodIDPtr,
+    _disconnect(reference.pointer, _id_disconnect as jni.JMethodIDPtr,
             resultCallbacksInterface.reference.pointer)
         .check();
   }
