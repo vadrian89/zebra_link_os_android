@@ -61,17 +61,47 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   Future<void> findPrinters() async => _plugin.findPrinters();
 
   @override
+  Future<bool> connect({required String address}) {
+    final Completer<bool> completer = Completer<bool>();
+    _plugin.connect(
+      JString.fromString(address),
+      _resultCallback(
+        (result) => completer.complete(true),
+        (message) => completer.completeError(ZebraLinkOsException.general(
+          message: message,
+          stackTrace: StackTrace.current,
+        )),
+      ),
+    );
+    return completer.future;
+  }
+
+  @override
+  Future<bool> disconnect() {
+    final Completer<bool> completer = Completer<bool>();
+    _plugin.disconnect(
+      _resultCallback(
+        (result) => completer.complete(true),
+        (message) => completer.completeError(ZebraLinkOsException.general(
+          message: message,
+          stackTrace: StackTrace.current,
+        )),
+      ),
+    );
+    return completer.future;
+  }
+
+  @override
   Future<bool> write({required String string, required DiscoveredPrinter printer}) {
     final Completer<bool> completer = Completer<bool>();
-    _plugin.writeString(
-      JString.fromString(printer.address),
+    _plugin.write(
       JString.fromString(string),
       _resultCallback(
         (result) => completer.complete(true),
-        (message) => throw ZebraWriteException(
+        (message) => completer.completeError(ZebraLinkOsException.write(
           message: message,
           stackTrace: StackTrace.current,
-        ),
+        )),
       ),
     );
     return completer.future;
@@ -89,7 +119,6 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   }) {
     final Completer<bool> completer = Completer<bool>();
     _plugin.printImage(
-      JString.fromString(printer.address),
       JString.fromString(filePath),
       x,
       y,
@@ -98,10 +127,10 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
       insideFormat ? 1 : 0,
       _resultCallback(
         (result) => completer.complete(true),
-        (message) => throw ZebraPrintImageException(
+        (message) => completer.completeError(ZebraLinkOsException.printImage(
           message: message,
           stackTrace: StackTrace.current,
-        ),
+        )),
       ),
     );
     return completer.future;
@@ -109,7 +138,6 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
 
   @override
   Future<void> dispose() async {
-    __plugin?.disconnect(_resultCallback());
     await __printerFoundController?.close();
     __printerFoundController = null;
   }

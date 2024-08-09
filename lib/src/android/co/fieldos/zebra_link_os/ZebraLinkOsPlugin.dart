@@ -76,6 +76,38 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .reference);
   }
 
+  static final _id_connect = _class.instanceMethodId(
+    r"connect",
+    r"(Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
+  );
+
+  static final _connect = ProtectedJniExtensions.lookup<
+          ffi.NativeFunction<
+              jni.JThrowablePtr Function(
+                  ffi.Pointer<ffi.Void>,
+                  jni.JMethodIDPtr,
+                  ffi.VarArgs<
+                      (
+                        ffi.Pointer<ffi.Void>,
+                        ffi.Pointer<ffi.Void>
+                      )>)>>("globalEnv_CallVoidMethod")
+      .asFunction<
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+
+  /// from: public final void connect(java.lang.String string, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
+  void connect(
+    jni.JString string,
+    resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
+  ) {
+    _connect(
+            reference.pointer,
+            _id_connect as jni.JMethodIDPtr,
+            string.reference.pointer,
+            resultCallbacksInterface.reference.pointer)
+        .check();
+  }
+
   static final _id_disconnect = _class.instanceMethodId(
     r"disconnect",
     r"(Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
@@ -126,7 +158,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
 
   static final _id_printImage = _class.instanceMethodId(
     r"printImage",
-    r"(Ljava/lang/String;Ljava/lang/String;IIIIILco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
+    r"(Ljava/lang/String;IIIIILco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
   static final _printImage = ProtectedJniExtensions.lookup<
@@ -136,7 +168,6 @@ class ZebraLinkOsPlugin extends jni.JObject {
                   jni.JMethodIDPtr,
                   ffi.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
                         ffi.Pointer<ffi.Void>,
                         ffi.Int32,
                         ffi.Int32,
@@ -150,7 +181,6 @@ class ZebraLinkOsPlugin extends jni.JObject {
               ffi.Pointer<ffi.Void>,
               jni.JMethodIDPtr,
               ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
               int,
               int,
               int,
@@ -158,10 +188,9 @@ class ZebraLinkOsPlugin extends jni.JObject {
               int,
               ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void printImage(java.lang.String string, java.lang.String string1, int i, int i1, int i2, int i3, int i4, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
+  /// from: public final void printImage(java.lang.String string, int i, int i1, int i2, int i3, int i4, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
   void printImage(
     jni.JString string,
-    jni.JString string1,
     int i,
     int i1,
     int i2,
@@ -173,7 +202,6 @@ class ZebraLinkOsPlugin extends jni.JObject {
             reference.pointer,
             _id_printImage as jni.JMethodIDPtr,
             string.reference.pointer,
-            string1.reference.pointer,
             i,
             i1,
             i2,
@@ -183,12 +211,12 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .check();
   }
 
-  static final _id_writeString = _class.instanceMethodId(
-    r"writeString",
-    r"(Ljava/lang/String;Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
+  static final _id_write = _class.instanceMethodId(
+    r"write",
+    r"(Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V",
   );
 
-  static final _writeString = ProtectedJniExtensions.lookup<
+  static final _write = ProtectedJniExtensions.lookup<
           ffi.NativeFunction<
               jni.JThrowablePtr Function(
                   ffi.Pointer<ffi.Void>,
@@ -196,28 +224,21 @@ class ZebraLinkOsPlugin extends jni.JObject {
                   ffi.VarArgs<
                       (
                         ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>,
                         ffi.Pointer<ffi.Void>
                       )>)>>("globalEnv_CallVoidMethod")
       .asFunction<
-          jni.JThrowablePtr Function(
-              ffi.Pointer<ffi.Void>,
-              jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>)>();
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void writeString(java.lang.String string, java.lang.String string1, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
-  void writeString(
+  /// from: public final void write(java.lang.String string, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)
+  void write(
     jni.JString string,
-    jni.JString string1,
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
-    _writeString(
+    _write(
             reference.pointer,
-            _id_writeString as jni.JMethodIDPtr,
+            _id_write as jni.JMethodIDPtr,
             string.reference.pointer,
-            string1.reference.pointer,
             resultCallbacksInterface.reference.pointer)
         .check();
   }

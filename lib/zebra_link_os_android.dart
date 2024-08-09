@@ -33,6 +33,10 @@ class ZebraLinkOs {
 
   Future<bool> requestPermissions() => _instance.requestPermissions();
 
+  Future<bool> connect({required String address}) => _instance.connect(address: address);
+
+  Future<bool> disconnect() => _instance.disconnect();
+
   Future<bool> write({required String string, required DiscoveredPrinter printer}) =>
       _instance.write(string: string, printer: printer);
 
