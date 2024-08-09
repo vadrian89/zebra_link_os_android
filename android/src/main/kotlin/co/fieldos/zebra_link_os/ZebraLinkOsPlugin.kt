@@ -40,6 +40,7 @@ class ZebraLinkOsPlugin(
     fun connect(address: String, callbacks: ResultCallbacksInterface) {
         if (connection?.macAddress == address || connection?.isConnected == true) {
             Log.d("ZebraLinkOsPlugin", "Already connected to printer")
+            callbacks.onSuccess(connection!!.macAddress)
             return
         }
         mainScope.launch {
