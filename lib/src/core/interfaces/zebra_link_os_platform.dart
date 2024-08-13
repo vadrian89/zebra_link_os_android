@@ -18,14 +18,6 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
     _instance = instance;
   }
 
-  /// Check if the device is enabled and has the necessary permissions to use the bluetooth device.
-  ///
-  /// It will request permissions for bluetooth scanning, connecting and device location.
-  /// Aswell it will try to check if the bluetooth/location modules are enabled.
-  ///
-  /// Returns [true] if the device is enabled and has the necessary permissions, otherwise [false].
-  Future<bool> requestPermissions();
-
   Future<bool> connect({required String address});
 
   Future<bool> disconnect();
@@ -45,9 +37,6 @@ abstract class ZebraLinkOsPlatform extends PlatformInterface implements PrinterD
 
 /// Default implementation of the ZebraLinkOsPlatform.
 class _ZebraLinkOsDefault extends ZebraLinkOsPlatform {
-  @override
-  Future<bool> requestPermissions() => throw UnimplementedError();
-
   @override
   Future<void> findPrinters() => throw UnimplementedError();
 

@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:jni/jni.dart';
 import 'package:zebra_link_os_android/core.dart';
-import 'package:zebra_link_os_android/permissions.dart';
 import 'package:zebra_link_os_android/src/android/classes/jni_utils.dart';
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth.dart';
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/ResultCallbacksInterface.dart';
@@ -42,20 +41,6 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
     this.onError,
     this.onFinished,
   });
-
-  /// Check if the device is enabled and has the necessary permissions to use the bluetooth device.
-  ///
-  /// Returns [true] if the device is enabled and has the necessary permissions, otherwise [false].
-  @override
-  Future<bool> requestPermissions() async {
-    final isEnabled = await BluetoothPermissions.isEnabled;
-    if (!isEnabled) return false;
-    final isScanGranted = await BluetoothPermissions.isScanPermissionGranted;
-    if (!isScanGranted) return false;
-    final isConnectGranted = await BluetoothPermissions.isConnectPermissionGranted;
-    if (!isConnectGranted) return false;
-    return await BluetoothPermissions.isLocationPermissionGranted;
-  }
 
   @override
   Future<void> findPrinters() async => _plugin.findPrinters();

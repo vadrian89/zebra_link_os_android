@@ -7,6 +7,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:zebra_link_os_android/core.dart';
 import 'package:zebra_link_os_android/zebra_link_os_android.dart';
 
+import 'bluetooth_permissions.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -19,8 +21,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late final ZebraLinkOs _plugin = ZebraLinkOs();
-  late final Future<bool> _requestPermissions;
+  late final ValueNotifier<bool> _discoverFinishedNotifier;
+  late final ZebraLinkOs _plugin = ZebraLinkOs(
+    onFinished: () => _discoverFinishedNotifier.value = true,
+  );
+  late final Future<bool> _requestedPermissions;
   late final StreamSubscription<DiscoveredPrinter> _subscription;
   late final ValueNotifier<Set<DiscoveredPrinter>> _printersNotifier;
   DiscoveredPrinter? _selectedPrinter;
@@ -28,7 +33,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    _requestPermissions = _plugin.requestPermissions();
+    _requestedPermissions = _requestPermissions();
+    _discoverFinishedNotifier = ValueNotifier(false);
     _subscription = _plugin.printerFound.listen(
       (event) => _printersNotifier.value = {..._printersNotifier.value, event},
     );
@@ -40,57 +46,62 @@ class _MyAppState extends State<MyApp> {
     _subscription.cancel();
     _plugin.dispose();
     _printersNotifier.dispose();
+    _discoverFinishedNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) => MaterialApp(
         home: FutureBuilder(
-            future: _requestPermissions,
-            builder: (context, snapshot) {
-              return Scaffold(
-                appBar: AppBar(
-                  title: const Text("Plugin example app"),
-                ),
-                body: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        switch (snapshot.connectionState) {
-                          ConnectionState.done =>
-                            snapshot.data == true ? "Permissions granted" : "Permissions denied",
-                          _ => "Requesting permissions...",
+          future: _requestedPermissions,
+          builder: (context, snapshot) {
+            return Scaffold(
+              appBar: AppBar(
+                title: const Text("Plugin example app"),
+              ),
+              body: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      switch (snapshot.connectionState) {
+                        ConnectionState.done =>
+                          snapshot.data == true ? "Permissions granted" : "Permissions denied",
+                        _ => "Requesting permissions...",
+                      },
+                      style: Theme.of(context).textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 16),
+                    ValueListenableBuilder(
+                      valueListenable: _printersNotifier,
+                      builder: (context, printers, child) => ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: printers.length,
+                        itemBuilder: (context, index) {
+                          final printer = printers.elementAt(index) as DiscoveredPrinterBluetooth;
+                          return RadioListTile(
+                            groupValue: _selectedPrinter,
+                            value: printer,
+                            title: Text(printer.friendlyName),
+                            onChanged: (value) => setState(() => _selectedPrinter = value),
+                          );
                         },
-                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      const SizedBox(height: 16),
-                      ValueListenableBuilder(
-                        valueListenable: _printersNotifier,
-                        builder: (context, printers, child) => ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: printers.length,
-                          itemBuilder: (context, index) {
-                            final printer = printers.elementAt(index) as DiscoveredPrinterBluetooth;
-                            return RadioListTile(
-                              groupValue: _selectedPrinter,
-                              value: printer,
-                              title: Text(printer.friendlyName),
-                              onChanged: (value) => setState(() => _selectedPrinter = value),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                bottomNavigationBar: ButtonBar(
+              ),
+              bottomNavigationBar: ValueListenableBuilder<bool>(
+                valueListenable: _discoverFinishedNotifier,
+                builder: (context, finished, child) => ButtonBar(
                   alignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                       onPressed: switch (snapshot.connectionState) {
                         ConnectionState.done =>
-                          (snapshot.data == true) && (_selectedPrinter != null) ? _printTest : null,
+                          finished && (snapshot.data == true) && (_selectedPrinter != null)
+                              ? _printTest
+                              : null,
                         _ => null,
                       },
                       child: const Text("Print"),
@@ -98,7 +109,7 @@ class _MyAppState extends State<MyApp> {
                     ElevatedButton(
                       onPressed: switch (snapshot.connectionState) {
                         ConnectionState.done =>
-                          (snapshot.data == true) && (_selectedPrinter != null)
+                          finished && (snapshot.data == true) && (_selectedPrinter != null)
                               ? _printTestImage
                               : null,
                         _ => null,
@@ -107,26 +118,46 @@ class _MyAppState extends State<MyApp> {
                     ),
                     ElevatedButton(
                       onPressed: switch (snapshot.connectionState) {
-                        ConnectionState.done => snapshot.data == true ? _findPrinters : null,
+                        ConnectionState.done =>
+                          finished || snapshot.data == true ? _findPrinters : null,
                         _ => null,
                       },
                       child: const Text("Find printers"),
                     ),
+                    ElevatedButton(
+                      onPressed: switch (snapshot.connectionState) {
+                        ConnectionState.done =>
+                          finished && (snapshot.data == true) && (_selectedPrinter != null)
+                              ? () => _plugin.connect(address: _selectedPrinter!.address)
+                              : null,
+                        _ => null,
+                      },
+                      child: const Text("Connect"),
+                    ),
+                    ElevatedButton(
+                      onPressed: _plugin.disconnect,
+                      child: const Text("Disconnect"),
+                    ),
                   ],
                 ),
-              );
-            }),
+              ),
+            );
+          },
+        ),
       );
 
   Future<void> _printTestImage() async {
-    final bytes = await rootBundle.load("assets/print-test.png");
+    final bytes = await rootBundle.load("assets/packaging-notice.png");
     final dir = await getApplicationDocumentsDirectory();
-    final filePath = "${dir.path}/print-test.png";
+    final filePath = "${dir.path}/packaging-notice.png";
     final file = await File(filePath).writeAsBytes(bytes.buffer.asUint8List());
+    await Future.delayed(const Duration(milliseconds: 500));
     _plugin.printImage(
       printer: _selectedPrinter!,
       filePath: file.path,
+      x: 10,
     );
+    await Future.delayed(const Duration(milliseconds: 500));
   }
 
   void _printTest() {
@@ -139,5 +170,15 @@ class _MyAppState extends State<MyApp> {
   void _findPrinters() {
     _printersNotifier.value = const {};
     _plugin.findPrinters();
+  }
+
+  Future<bool> _requestPermissions() async {
+    final isEnabled = await BluetoothPermissions.isEnabled;
+    if (!isEnabled) return false;
+    final isScanGranted = await BluetoothPermissions.isScanPermissionGranted;
+    if (!isScanGranted) return false;
+    final isConnectGranted = await BluetoothPermissions.isConnectPermissionGranted;
+    if (!isConnectGranted) return false;
+    return await BluetoothPermissions.isLocationPermissionGranted;
   }
 }

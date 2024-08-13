@@ -31,8 +31,6 @@ class ZebraLinkOs {
 
   Future<void> dispose() => _instance.dispose();
 
-  Future<bool> requestPermissions() => _instance.requestPermissions();
-
   Future<bool> connect({required String address}) => _instance.connect(address: address);
 
   Future<bool> disconnect() => _instance.disconnect();
