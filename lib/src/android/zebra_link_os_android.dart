@@ -2,22 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:jni/jni.dart';
-import 'package:zebra_link_os_android/core.dart';
 import 'package:zebra_link_os_android/src/android/classes/jni_utils.dart';
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth.dart';
 import 'package:zebra_link_os_android/src/android/co/fieldos/zebra_link_os/ResultCallbacksInterface.dart';
+import 'package:zebra_link_os_platform_core/classes.dart';
+import 'package:zebra_link_os_platform_core/zebra_link_os_plugin.dart';
 
 import '../core/classes/discovery_handler_base.dart';
 import 'co/fieldos/zebra_link_os/_package.dart' as g;
 import 'com/zebra/sdk/printer/discovery/_package.dart' as z;
 
-class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
+class ZebraLinkOsAndroid extends ZebraLinkOsPluginBase {
   g.ZebraLinkOsPlugin? __plugin;
   g.ZebraLinkOsPlugin get _plugin => __plugin ??= g.ZebraLinkOsPlugin(
         JniUtils.context,
         DiscoveryHandlerBluetooth.implement(_DiscoveryHandlerBluetooth(
-          onDiscoveryError: (value) => onError?.call(DiscoveredPrinterError(message: value)),
-          onDiscoveryFinished: () => onFinished?.call(),
+          onDiscoveryError: onError,
+          onDiscoveryFinished: onFinished,
           onFoundPrinter: (value) => _printerFoundController.sink.add(
             value as DiscoveredPrinterBluetooth,
           ),
@@ -29,7 +30,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
       __printerFoundController ??= StreamController<DiscoveredPrinterBluetooth>.broadcast();
 
   /// Called when an error occurs while trying to discover printers.
-  ValueChanged<DiscoveredPrinterError>? onError;
+  ValueChanged<String>? onError;
 
   /// Called when the SDK reports that it has finished discovering printers.
   VoidCallback? onFinished;
@@ -43,7 +44,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   });
 
   @override
-  Future<void> findPrinters() async => _plugin.findPrinters();
+  Future<void> startDiscovery() async => _plugin.findPrinters();
 
   @override
   Future<bool> connect({required String address}) {
@@ -52,7 +53,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
       JString.fromString(address),
       _resultCallback(
         (result) => completer.complete(true),
-        (message) => completer.completeError(ZebraLinkOsException.general(
+        (message) => completer.completeError(ZebraLinkOsException.connection(
           message: message,
           stackTrace: StackTrace.current,
         )),
@@ -67,7 +68,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
     _plugin.disconnect(
       _resultCallback(
         (result) => completer.complete(true),
-        (message) => completer.completeError(ZebraLinkOsException.general(
+        (message) => completer.completeError(ZebraLinkOsException.connection(
           message: message,
           stackTrace: StackTrace.current,
         )),
@@ -77,10 +78,10 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   }
 
   @override
-  Future<bool> write({required String string, required DiscoveredPrinter printer}) {
+  Future<bool> write({required String data}) {
     final Completer<bool> completer = Completer<bool>();
     _plugin.write(
-      JString.fromString(string),
+      JString.fromString(data),
       _resultCallback(
         (result) => completer.complete(true),
         (message) => completer.completeError(ZebraLinkOsException.write(
@@ -93,8 +94,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPlatform {
   }
 
   @override
-  Future<bool> printImage({
-    required DiscoveredPrinter printer,
+  Future<bool> printImageFile({
     required String filePath,
     int width = 0,
     int height = 0,

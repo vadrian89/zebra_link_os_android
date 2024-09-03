@@ -419,6 +419,15 @@ packages:
       relative: true
     source: path
     version: "0.0.1"
+  zebra_link_os_platform_core:
+    dependency: transitive
+    description:
+      path: "."
+      ref: c6ad3e9d35edbd3400d7a1f106cd1fb6723f7bb7
+      resolved-ref: c6ad3e9d35edbd3400d7a1f106cd1fb6723f7bb7
+      url: "https://github.com/vadrian89/zebra_link_os_platform_core"
+    source: git
+    version: "0.0.1"
 sdks:
   dart: ">=3.3.4 <4.0.0"
   flutter: ">=3.16.6"

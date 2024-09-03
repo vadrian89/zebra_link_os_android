@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:zebra_link_os_android/core.dart';
 import 'package:zebra_link_os_android/zebra_link_os_android.dart';
 
 import 'bluetooth_permissions.dart';
@@ -119,7 +118,7 @@ class _MyAppState extends State<MyApp> {
                     ElevatedButton(
                       onPressed: switch (snapshot.connectionState) {
                         ConnectionState.done =>
-                          finished || snapshot.data == true ? _findPrinters : null,
+                          finished || snapshot.data == true ? _startDiscovery : null,
                         _ => null,
                       },
                       child: const Text("Find printers"),
@@ -147,16 +146,13 @@ class _MyAppState extends State<MyApp> {
       );
 
   Future<void> _printTestImage() async {
-    final bytes = await rootBundle.load("assets/packaging-notice.png");
+    const fileName = "print-test.png";
+    final bytes = await rootBundle.load("assets/$fileName");
     final dir = await getApplicationDocumentsDirectory();
-    final filePath = "${dir.path}/packaging-notice.png";
+    final filePath = "${dir.path}/$fileName";
     final file = await File(filePath).writeAsBytes(bytes.buffer.asUint8List());
     await Future.delayed(const Duration(milliseconds: 500));
-    _plugin.printImage(
-      printer: _selectedPrinter!,
-      filePath: file.path,
-      x: 10,
-    );
+    await _plugin.printImageFile(filePath: file.path, x: 10);
     await Future.delayed(const Duration(milliseconds: 500));
   }
 
@@ -164,12 +160,12 @@ class _MyAppState extends State<MyApp> {
     var string = "! 0 200 200 210 1\r\n";
     string += "TEXT 4 0 30 40 Ola Field OS!!1\r\n";
     string += "PRINT\r\n";
-    _plugin.write(string: string, printer: _selectedPrinter!);
+    _plugin.write(data: string);
   }
 
-  void _findPrinters() {
+  void _startDiscovery() {
     _printersNotifier.value = const {};
-    _plugin.findPrinters();
+    _plugin.startDiscovery();
   }
 
   Future<bool> _requestPermissions() async {
