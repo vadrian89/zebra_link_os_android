@@ -24,9 +24,7 @@ class ZebraLinkOs implements ZebraLinkOsPluginInterface {
   }
 
   /// Register this dart class as the platform implementation
-  static void registerWith() {
-    ZebraLinkOsPluginBase.instance = ZebraLinkOsAndroid();
-  }
+  static void registerWith() => ZebraLinkOsPluginBase.instance = ZebraLinkOsAndroid();
 
   @override
   Stream<DiscoveredPrinter> get printerFound => _instance.printerFound;
