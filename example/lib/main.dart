@@ -21,11 +21,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late final ValueNotifier<bool> _discoverFinishedNotifier;
-  late final ZebraLinkOs _plugin = ZebraLinkOs(
-    onFinished: () => _discoverFinishedNotifier.value = true,
-  );
+  late final ZebraLinkOsAndroid _plugin = ZebraLinkOsAndroid();
   late final Future<bool> _requestedPermissions;
-  late final StreamSubscription<DiscoveredPrinter> _subscription;
   late final ValueNotifier<Set<DiscoveredPrinter>> _printersNotifier;
   DiscoveredPrinter? _selectedPrinter;
 
@@ -33,16 +30,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _requestedPermissions = _requestPermissions();
-    _discoverFinishedNotifier = ValueNotifier(false);
-    _subscription = _plugin.printerFound.listen(
-      (event) => _printersNotifier.value = {..._printersNotifier.value, event},
-    );
+    _discoverFinishedNotifier = ValueNotifier(true);
     _printersNotifier = ValueNotifier(const {});
   }
 
   @override
   void dispose() {
-    _subscription.cancel();
     _plugin.dispose();
     _printersNotifier.dispose();
     _discoverFinishedNotifier.dispose();
@@ -72,20 +65,27 @@ class _MyAppState extends State<MyApp> {
                     ),
                     const SizedBox(height: 16),
                     ValueListenableBuilder(
-                      valueListenable: _printersNotifier,
-                      builder: (context, printers, child) => ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: printers.length,
-                        itemBuilder: (context, index) {
-                          final printer = printers.elementAt(index) as DiscoveredPrinterBluetooth;
-                          return RadioListTile(
-                            groupValue: _selectedPrinter,
-                            value: printer,
-                            title: Text(printer.friendlyName),
-                            onChanged: (value) => setState(() => _selectedPrinter = value),
-                          );
-                        },
-                      ),
+                      valueListenable: _discoverFinishedNotifier,
+                      builder: (context, value, child) {
+                        if (!value) return const CircularProgressIndicator();
+                        return ValueListenableBuilder(
+                          valueListenable: _printersNotifier,
+                          builder: (context, printers, child) => ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: printers.length,
+                            itemBuilder: (context, index) {
+                              final printer =
+                                  printers.elementAt(index) as DiscoveredPrinterBluetooth;
+                              return RadioListTile(
+                                groupValue: _selectedPrinter,
+                                value: printer,
+                                title: Text(printer.friendlyName),
+                                onChanged: (value) => setState(() => _selectedPrinter = value),
+                              );
+                            },
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -163,9 +163,12 @@ class _MyAppState extends State<MyApp> {
     _plugin.write(data: string);
   }
 
-  void _startDiscovery() {
-    _printersNotifier.value = const {};
-    _plugin.startDiscovery();
+  Future<void> _startDiscovery() async {
+    _discoverFinishedNotifier.value = false;
+    _plugin.startDiscovery().then((value) {
+      _discoverFinishedNotifier.value = true;
+      _printersNotifier.value = {...?value};
+    });
   }
 
   Future<bool> _requestPermissions() async {

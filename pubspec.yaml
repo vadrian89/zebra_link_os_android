@@ -14,7 +14,7 @@ flutter:
     platforms:
       android:
         ffiPlugin: true
-        dartPluginClass: ZebraLinkOs
+        dartPluginClass: ZebraLinkOsAndroid
 
 dependencies:
   flutter:
@@ -23,7 +23,7 @@ dependencies:
   zebra_link_os_platform_core: 
     git: 
       url: https://github.com/vadrian89/zebra_link_os_platform_core
-      ref: 20a0e63e36b09a38e3f8836964b710f2c7848c29
+      ref: 98d29535b2a4a3b6926776b1f0c30574a3d77947
 
 dev_dependencies:
   flutter_lints: ^3.0.0

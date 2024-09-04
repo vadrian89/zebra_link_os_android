@@ -25,9 +25,9 @@ import "dart:ffi" as ffi;
 import "package:jni/internal_helpers_for_jnigen.dart";
 import "package:jni/jni.dart" as jni;
 
-import "DiscoveryHandlerBluetooth.dart" as discoveryhandlerbluetooth_;
-
 import "ResultCallbacksInterface.dart" as resultcallbacksinterface_;
+
+import "DiscoveryHandlerBluetooth.dart" as discoveryhandlerbluetooth_;
 
 /// from: co.fieldos.zebra_link_os.ZebraLinkOsPlugin
 class ZebraLinkOsPlugin extends jni.JObject {
@@ -44,35 +44,27 @@ class ZebraLinkOsPlugin extends jni.JObject {
   /// The type which includes information such as the signature of this class.
   static const type = $ZebraLinkOsPluginType();
   static final _id_new0 = _class.constructorId(
-    r"(Landroid/content/Context;Lco/fieldos/zebra_link_os/DiscoveryHandlerBluetooth;)V",
+    r"(Landroid/content/Context;)V",
   );
 
   static final _new0 = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
-                      (
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>
-                      )>)>>("globalEnv_NewObject")
+              ffi.NativeFunction<
+                  jni.JniResult Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          "globalEnv_NewObject")
       .asFunction<
           jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+              ffi.Pointer<ffi.Void>)>();
 
-  /// from: public void <init>(android.content.Context context, co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth discoveryHandlerBluetooth)
+  /// from: public void <init>(android.content.Context context)
   /// The returned object must be released after use, by calling the [release] method.
   factory ZebraLinkOsPlugin(
     jni.JObject context,
-    discoveryhandlerbluetooth_.DiscoveryHandlerBluetooth
-        discoveryHandlerBluetooth,
   ) {
-    return ZebraLinkOsPlugin.fromReference(_new0(
-            _class.reference.pointer,
-            _id_new0 as jni.JMethodIDPtr,
-            context.reference.pointer,
-            discoveryHandlerBluetooth.reference.pointer)
+    return ZebraLinkOsPlugin.fromReference(_new0(_class.reference.pointer,
+            _id_new0 as jni.JMethodIDPtr, context.reference.pointer)
         .reference);
   }
 
@@ -133,26 +125,29 @@ class ZebraLinkOsPlugin extends jni.JObject {
         .check();
   }
 
-  static final _id_findPrinters = _class.instanceMethodId(
-    r"findPrinters",
-    r"()V",
+  static final _id_startDiscovery = _class.instanceMethodId(
+    r"startDiscovery",
+    r"(Lco/fieldos/zebra_link_os/DiscoveryHandlerBluetooth;)V",
   );
 
-  static final _findPrinters = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
-              )>>("globalEnv_CallVoidMethod")
+  static final _startDiscovery = ProtectedJniExtensions.lookup<
+              ffi.NativeFunction<
+                  jni.JThrowablePtr Function(
+                      ffi.Pointer<ffi.Void>,
+                      jni.JMethodIDPtr,
+                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+          "globalEnv_CallVoidMethod")
       .asFunction<
-          jni.JThrowablePtr Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
-          )>();
+          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
+              ffi.Pointer<ffi.Void>)>();
 
-  /// from: public final void findPrinters()
-  void findPrinters() {
-    _findPrinters(reference.pointer, _id_findPrinters as jni.JMethodIDPtr)
+  /// from: public final void startDiscovery(co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth discoveryHandlerBluetooth)
+  void startDiscovery(
+    discoveryhandlerbluetooth_.DiscoveryHandlerBluetooth
+        discoveryHandlerBluetooth,
+  ) {
+    _startDiscovery(reference.pointer, _id_startDiscovery as jni.JMethodIDPtr,
+            discoveryHandlerBluetooth.reference.pointer)
         .check();
   }
 

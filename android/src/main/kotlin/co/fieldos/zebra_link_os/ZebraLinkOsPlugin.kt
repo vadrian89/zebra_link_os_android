@@ -5,7 +5,6 @@ import android.util.Log
 import com.zebra.sdk.comm.BluetoothConnection
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
-import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -14,10 +13,7 @@ import kotlinx.coroutines.launch
 
 class ZebraLinkOsPlugin(
     private val context: Context,
-    private val discoveryHandler: DiscoveryHandlerBluetooth
 ) {
-    private lateinit var discoverer: PrinterDiscovererBluetooth
-    private val printers: MutableList<DiscoveredPrinterBluetooth> = mutableListOf()
     private var connection: BluetoothConnection? = null
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val disconnectCallbacks = object : ResultCallbacksInterface {
@@ -27,14 +23,6 @@ class ZebraLinkOsPlugin(
         override fun onError(error: String) {
             Log.e("ZebraLinkOsPlugin", "Error disconnecting from printer internally", Exception(error))
         }
-    }
-
-    private fun initDiscoverer() {
-        discoverer = PrinterDiscovererBluetooth(
-            ::onFound,
-            discoveryHandler::onFinished,
-            discoveryHandler::onError
-        )
     }
 
     fun connect(address: String, callbacks: ResultCallbacksInterface) {
@@ -72,10 +60,13 @@ class ZebraLinkOsPlugin(
         }
     }
 
-    fun findPrinters() {
+    fun startDiscovery(discoveryHandler: DiscoveryHandlerBluetooth) {
+        val discoverer = PrinterDiscovererBluetooth(
+            discoveryHandler::onFound,
+            discoveryHandler::onFinished,
+            discoveryHandler::onError
+        )
         try {
-            if (!this::discoverer.isInitialized) initDiscoverer()
-            printers.clear()
             discoverer.findPrinters(context)
         } catch (e: Exception) {
             discoveryHandler.onError("Unknown error")
@@ -119,11 +110,6 @@ class ZebraLinkOsPlugin(
                 disconnect(disconnectCallbacks)
             }
         }
-    }
-
-    private fun onFound(printer: DiscoveredPrinterBluetooth) {
-        printers.add(printer)
-        discoveryHandler.onFound(printer)
     }
 }
 
