@@ -19,14 +19,14 @@ flutter:
 dependencies:
   flutter:
     sdk: flutter
-  jni: ^0.9.2  
+  jni: ^0.11.0  
   zebra_link_os_platform_core: 
     git: 
       url: https://github.com/vadrian89/zebra_link_os_platform_core
-      ref: 98d29535b2a4a3b6926776b1f0c30574a3d77947
+      ref: ac634b836871f691e401c7056063d857accbaccd
 
 dev_dependencies:
   flutter_lints: ^3.0.0
   flutter_test:
     sdk: flutter
-  jnigen: ^0.9.2
+  jnigen: ^0.11.0
