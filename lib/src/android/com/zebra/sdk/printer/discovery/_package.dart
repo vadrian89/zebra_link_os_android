@@ -1,2 +1,2 @@
-export "DiscoveredPrinter.dart";
-export "DiscoveredPrinterBluetooth.dart";
+export 'DiscoveredPrinter.dart';
+export 'DiscoveredPrinterBluetooth.dart';

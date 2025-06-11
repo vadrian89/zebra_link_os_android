@@ -127,6 +127,30 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPluginBase {
   }
 
   @override
+  Future<bool> storeImage({
+    required String filePath,
+    required String deviceDriveAndFileName,
+    int width = 0,
+    int height = 0,
+  }) {
+    final completer = Completer<bool>();
+    _plugin.storeImage(
+      JString.fromString(filePath),
+      JString.fromString(deviceDriveAndFileName),
+      width,
+      height,
+      _resultCallback(
+        (result) => completer.complete(true),
+        (message) => completer.completeError(ZebraLinkOsException.printImage(
+          message: message,
+          stackTrace: StackTrace.current,
+        )),
+      ),
+    );
+    return completer.future;
+  }
+
+  @override
   Future<void> dispose() async {
     await __printerFoundController?.close();
     __printerFoundController = null;

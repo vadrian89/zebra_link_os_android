@@ -1,3 +1,3 @@
-export "ResultCallbacksInterface.dart";
-export "DiscoveryHandlerBluetooth.dart";
-export "ZebraLinkOsPlugin.dart";
+export 'ResultCallbacksInterface.dart';
+export 'DiscoveryHandlerBluetooth.dart';
+export 'ZebraLinkOsPlugin.dart';

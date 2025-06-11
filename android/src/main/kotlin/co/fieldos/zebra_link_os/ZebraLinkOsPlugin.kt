@@ -95,6 +95,25 @@ class ZebraLinkOsPlugin(
         }
     }
 
+    // Store an image in the printer's memory.
+    fun storeImage(filePath: String, deviceDriveAndFileName: String, width: Int = 0, height: Int = 0, callbacks: ResultCallbacksInterface) {
+        mainScope.launch(Dispatchers.Default) {
+            Log.d("ZebraLinkOsPlugin", "Storing image: $filePath as $deviceDriveAndFileName")
+            try {
+                val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
+                val image = ZebraImageAndroid(filePath)
+                effectivePrinter.storeImage(filePath, image, width, height)
+                delay(500L)
+                callbacks.onSuccess("")
+            } catch (e: Exception) {
+                Log.e("ZebraLinkOsPlugin", "Error storing image", e)
+                e.printStackTrace()
+                callbacks.onError(e.message ?: "Unknown error")
+                disconnect(disconnectCallbacks)
+            }
+        }
+    }
+
     // Write the string to a printer.
     fun write(string: String, callbacks: ResultCallbacksInterface) {
         mainScope.launch(Dispatchers.Default) {

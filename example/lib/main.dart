@@ -92,7 +92,7 @@ class _MyAppState extends State<MyApp> {
               ),
               bottomNavigationBar: ValueListenableBuilder<bool>(
                 valueListenable: _discoverFinishedNotifier,
-                builder: (context, finished, child) => ButtonBar(
+                builder: (context, finished, child) => OverflowBar(
                   alignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
