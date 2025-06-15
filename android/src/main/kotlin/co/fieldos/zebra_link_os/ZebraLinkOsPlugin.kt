@@ -101,8 +101,7 @@ class ZebraLinkOsPlugin(
             Log.d("ZebraLinkOsPlugin", "Storing image: $filePath as $deviceDriveAndFileName")
             try {
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
-                val image = ZebraImageAndroid(filePath)
-                effectivePrinter.storeImage(filePath, image, width, height)
+                effectivePrinter.storeImage(deviceDriveAndFileName, filePath, width, height)
                 delay(500L)
                 callbacks.onSuccess("")
             } catch (e: Exception) {
