@@ -61,18 +61,20 @@ class ZebraLinkOsPlugin(
     }
 
     fun startDiscovery(discoveryHandler: DiscoveryHandlerBluetooth) {
-        val discoverer = PrinterDiscovererBluetooth(
-            discoveryHandler::onFound,
-            discoveryHandler::onFinished,
-            discoveryHandler::onError
-        )
-        try {
-            discoverer.findPrinters(context)
-        } catch (e: Exception) {
-            discoveryHandler.onError("Unknown error")
-            Log.e("ZebraLinkOsPlugin", "Error finding printers", e)
-            e.printStackTrace()
-            disconnect(disconnectCallbacks)
+        mainScope.launch(Dispatchers.Default) {
+            val discoverer = PrinterDiscovererBluetooth(
+                discoveryHandler::onFound,
+                discoveryHandler::onFinished,
+                discoveryHandler::onError
+            )
+            try {
+                discoverer.findPrinters(context)
+            } catch (e: Exception) {
+                discoveryHandler.onError("Unknown error")
+                Log.e("ZebraLinkOsPlugin", "Error finding printers", e)
+                e.printStackTrace()
+                disconnect(disconnectCallbacks)
+            }
         }
     }
 

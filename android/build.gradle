@@ -19,7 +19,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.4'
+        classpath 'com.android.tools.build:gradle:8.9.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -35,7 +35,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 35
+    compileSdk 34
     if (project.android.hasProperty("namespace")) {
         namespace 'co.fieldos.zebra_link_os_android'
     }
@@ -56,12 +56,12 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
+        minSdkVersion 29
     }
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.12.0'
+        testImplementation 'org.mockito:mockito-core:5.19.0'
     }
 
     testOptions {
@@ -86,7 +86,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.activity:activity-ktx:1.9.0'
+    implementation 'androidx.activity:activity-ktx:1.8.2'
     def core_version = "1.13.1"
     // Java language implementation
     //noinspection KtxExtensionAvailable
