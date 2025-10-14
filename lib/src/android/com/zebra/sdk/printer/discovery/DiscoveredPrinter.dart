@@ -9,12 +9,18 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
+// ignore_for_file: inference_failure_on_untyped_parameter
+// ignore_for_file: invalid_internal_annotation
+// ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: library_prefixes
 // ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: only_throw_errors
 // ignore_for_file: overridden_fields
 // ignore_for_file: prefer_double_quotes
+// ignore_for_file: unintended_html_in_doc_comment
 // ignore_for_file: unnecessary_cast
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: unused_element
@@ -24,26 +30,29 @@
 // ignore_for_file: unused_shown_name
 // ignore_for_file: use_super_parameters
 
-import 'dart:ffi' as ffi;
-import 'dart:isolate' show ReceivePort;
+import 'dart:core' show Object, String, bool, double, int;
+import 'dart:core' as _$core;
 
-import 'package:jni/internal_helpers_for_jnigen.dart';
-import 'package:jni/jni.dart' as jni;
+import 'package:jni/_internal.dart' as _$jni;
+import 'package:jni/jni.dart' as _$jni;
 
 /// from: `com.zebra.sdk.printer.discovery.DiscoveredPrinter`
-class DiscoveredPrinter extends jni.JObject {
-  @override
-  late final jni.JObjType<DiscoveredPrinter> $type = type;
+class DiscoveredPrinter extends _$jni.JObject {
+  @_$jni.internal
+  @_$core.override
+  final _$jni.JObjType<DiscoveredPrinter> $type;
 
+  @_$jni.internal
   DiscoveredPrinter.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    _$jni.JReference reference,
+  )   : $type = type,
+        super.fromReference(reference);
 
-  static final _class =
-      jni.JClass.forName(r'com/zebra/sdk/printer/discovery/DiscoveredPrinter');
+  static final _class = _$jni.JClass.forName(
+      r'com/zebra/sdk/printer/discovery/DiscoveredPrinter');
 
   /// The type which includes information such as the signature of this class.
-  static const type = $DiscoveredPrinterType();
+  static const type = $DiscoveredPrinter$Type();
   static final _id_address = _class.instanceFieldId(
     r'address',
     r'Ljava/lang/String;',
@@ -51,96 +60,55 @@ class DiscoveredPrinter extends jni.JObject {
 
   /// from: `public final java.lang.String address`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JString get address => _id_address.get(this, const jni.JStringType());
-
-  static final _id_discoSettings = _class.instanceFieldId(
-    r'discoSettings',
-    r'Ljava/util/Map;',
-  );
-
-  /// from: `protected java.util.Map discoSettings`
-  /// The returned object must be released after use, by calling the [release] method.
-  jni.JMap<jni.JString, jni.JString> get discoSettings => _id_discoSettings.get(
-      this, const jni.JMapType(jni.JStringType(), jni.JStringType()));
-
-  /// from: `protected java.util.Map discoSettings`
-  /// The returned object must be released after use, by calling the [release] method.
-  set discoSettings(jni.JMap<jni.JString, jni.JString> value) =>
-      _id_discoSettings.set(this,
-          const jni.JMapType(jni.JStringType(), jni.JStringType()), value);
+  _$jni.JString get address => _id_address.get(this, const _$jni.JStringType());
 
   static final _id_getConnection = _class.instanceMethodId(
     r'getConnection',
     r'()Lcom/zebra/sdk/comm/Connection;',
   );
 
-  static final _getConnection = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _getConnection = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallObjectMethod')
       .asFunction<
-          jni.JniResult Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JniResult Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public abstract com.zebra.sdk.comm.Connection getConnection()`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JObject getConnection() {
+  _$jni.JObject getConnection() {
     return _getConnection(
-            reference.pointer, _id_getConnection as jni.JMethodIDPtr)
-        .object(const jni.JObjectType());
+            reference.pointer, _id_getConnection as _$jni.JMethodIDPtr)
+        .object(const _$jni.JObjectType());
   }
 
-  static final _id_new0 = _class.constructorId(
-    r'(Ljava/lang/String;)V',
-  );
-
-  static final _new0 = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JniResult Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
-          'globalEnv_NewObject')
-      .asFunction<
-          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
-
-  /// from: `public void <init>(java.lang.String string)`
-  /// The returned object must be released after use, by calling the [release] method.
-  factory DiscoveredPrinter(
-    jni.JString string,
-  ) {
-    return DiscoveredPrinter.fromReference(_new0(_class.reference.pointer,
-            _id_new0 as jni.JMethodIDPtr, string.reference.pointer)
-        .reference);
-  }
-
-  static final _id_toString1 = _class.instanceMethodId(
+  static final _id_toString$1 = _class.instanceMethodId(
     r'toString',
     r'()Ljava/lang/String;',
   );
 
-  static final _toString1 = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _toString$1 = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallObjectMethod')
       .asFunction<
-          jni.JniResult Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JniResult Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public java.lang.String toString()`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JString toString1() {
-    return _toString1(reference.pointer, _id_toString1 as jni.JMethodIDPtr)
-        .object(const jni.JStringType());
+  _$jni.JString toString$1() {
+    return _toString$1(reference.pointer, _id_toString$1 as _$jni.JMethodIDPtr)
+        .object(const _$jni.JStringType());
   }
 
   static final _id_getDiscoveryDataMap = _class.instanceMethodId(
@@ -148,24 +116,24 @@ class DiscoveredPrinter extends jni.JObject {
     r'()Ljava/util/Map;',
   );
 
-  static final _getDiscoveryDataMap = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _getDiscoveryDataMap = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallObjectMethod')
       .asFunction<
-          jni.JniResult Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JniResult Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public java.util.Map getDiscoveryDataMap()`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JMap<jni.JString, jni.JString> getDiscoveryDataMap() {
+  _$jni.JMap<_$jni.JString, _$jni.JString> getDiscoveryDataMap() {
     return _getDiscoveryDataMap(
-            reference.pointer, _id_getDiscoveryDataMap as jni.JMethodIDPtr)
-        .object(const jni.JMapType(jni.JStringType(), jni.JStringType()));
+            reference.pointer, _id_getDiscoveryDataMap as _$jni.JMethodIDPtr)
+        .object(const _$jni.JMapType(_$jni.JStringType(), _$jni.JStringType()));
   }
 
   static final _id_equals = _class.instanceMethodId(
@@ -173,73 +141,78 @@ class DiscoveredPrinter extends jni.JObject {
     r'(Ljava/lang/Object;)Z',
   );
 
-  static final _equals = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JniResult Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _equals = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JniResult Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallBooleanMethod')
       .asFunction<
-          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JniResult Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public boolean equals(java.lang.Object object)`
   bool equals(
-    jni.JObject object,
+    _$jni.JObject object,
   ) {
-    return _equals(reference.pointer, _id_equals as jni.JMethodIDPtr,
+    return _equals(reference.pointer, _id_equals as _$jni.JMethodIDPtr,
             object.reference.pointer)
         .boolean;
   }
 
-  static final _id_hashCode1 = _class.instanceMethodId(
+  static final _id_hashCode$1 = _class.instanceMethodId(
     r'hashCode',
     r'()I',
   );
 
-  static final _hashCode1 = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _hashCode$1 = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallIntMethod')
       .asFunction<
-          jni.JniResult Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JniResult Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public int hashCode()`
-  int hashCode1() {
-    return _hashCode1(reference.pointer, _id_hashCode1 as jni.JMethodIDPtr)
+  int hashCode$1() {
+    return _hashCode$1(reference.pointer, _id_hashCode$1 as _$jni.JMethodIDPtr)
         .integer;
   }
 }
 
-final class $DiscoveredPrinterType extends jni.JObjType<DiscoveredPrinter> {
-  const $DiscoveredPrinterType();
+final class $DiscoveredPrinter$Type extends _$jni.JObjType<DiscoveredPrinter> {
+  @_$jni.internal
+  const $DiscoveredPrinter$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   String get signature =>
       r'Lcom/zebra/sdk/printer/discovery/DiscoveredPrinter;';
 
-  @override
-  DiscoveredPrinter fromReference(jni.JReference reference) =>
+  @_$jni.internal
+  @_$core.override
+  DiscoveredPrinter fromReference(_$jni.JReference reference) =>
       DiscoveredPrinter.fromReference(reference);
 
-  @override
-  jni.JObjType get superType => const jni.JObjectType();
+  @_$jni.internal
+  @_$core.override
+  _$jni.JObjType get superType => const _$jni.JObjectType();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   final superCount = 1;
 
-  @override
-  int get hashCode => ($DiscoveredPrinterType).hashCode;
+  @_$core.override
+  int get hashCode => ($DiscoveredPrinter$Type).hashCode;
 
-  @override
+  @_$core.override
   bool operator ==(Object other) {
-    return other.runtimeType == ($DiscoveredPrinterType) &&
-        other is $DiscoveredPrinterType;
+    return other.runtimeType == ($DiscoveredPrinter$Type) &&
+        other is $DiscoveredPrinter$Type;
   }
 }

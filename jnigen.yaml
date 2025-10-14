@@ -12,7 +12,6 @@ source_path:
   - 'android/src/main/'
 class_path:
   - 'android/libs/ZSDK_ANDROID_API.jar'
-  - 'android/libs/ZSDK_ANDROID_BTLE.jar'
 
 output:
   dart:
@@ -26,7 +25,4 @@ classes:
   - 'co.fieldos.zebra_link_os.ZebraLinkOsPlugin'
   - 'com.zebra.sdk.printer.discovery.DiscoveredPrinter'
   - 'com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth'
-
-enable_experiment:
-  - interface_implementation
 

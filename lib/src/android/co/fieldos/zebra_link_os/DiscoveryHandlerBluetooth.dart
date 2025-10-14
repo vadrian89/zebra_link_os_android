@@ -9,12 +9,18 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
+// ignore_for_file: inference_failure_on_untyped_parameter
+// ignore_for_file: invalid_internal_annotation
+// ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: library_prefixes
 // ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: only_throw_errors
 // ignore_for_file: overridden_fields
 // ignore_for_file: prefer_double_quotes
+// ignore_for_file: unintended_html_in_doc_comment
 // ignore_for_file: unnecessary_cast
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: unused_element
@@ -24,51 +30,54 @@
 // ignore_for_file: unused_shown_name
 // ignore_for_file: use_super_parameters
 
-import 'dart:ffi' as ffi;
-import 'dart:isolate' show ReceivePort;
+import 'dart:core' show Object, String, bool, double, int;
+import 'dart:core' as _$core;
 
-import 'package:jni/internal_helpers_for_jnigen.dart';
-import 'package:jni/jni.dart' as jni;
+import 'package:jni/_internal.dart' as _$jni;
+import 'package:jni/jni.dart' as _$jni;
 
 import '../../../com/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth.dart'
     as discoveredprinterbluetooth_;
 
 /// from: `co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth`
-class DiscoveryHandlerBluetooth extends jni.JObject {
-  @override
-  late final jni.JObjType<DiscoveryHandlerBluetooth> $type = type;
+class DiscoveryHandlerBluetooth extends _$jni.JObject {
+  @_$jni.internal
+  @_$core.override
+  final _$jni.JObjType<DiscoveryHandlerBluetooth> $type;
 
+  @_$jni.internal
   DiscoveryHandlerBluetooth.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    _$jni.JReference reference,
+  )   : $type = type,
+        super.fromReference(reference);
 
-  static final _class =
-      jni.JClass.forName(r'co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth');
+  static final _class = _$jni.JClass.forName(
+      r'co/fieldos/zebra_link_os/DiscoveryHandlerBluetooth');
 
   /// The type which includes information such as the signature of this class.
-  static const type = $DiscoveryHandlerBluetoothType();
+  static const type = $DiscoveryHandlerBluetooth$Type();
   static final _id_onFound = _class.instanceMethodId(
     r'onFound',
     r'(Lcom/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth;)V',
   );
 
-  static final _onFound = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _onFound = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public abstract void onFound(com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth discoveredPrinterBluetooth)`
   void onFound(
     discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
         discoveredPrinterBluetooth,
   ) {
-    _onFound(reference.pointer, _id_onFound as jni.JMethodIDPtr,
+    _onFound(reference.pointer, _id_onFound as _$jni.JMethodIDPtr,
             discoveredPrinterBluetooth.reference.pointer)
         .check();
   }
@@ -78,21 +87,22 @@ class DiscoveryHandlerBluetooth extends jni.JObject {
     r'()V',
   );
 
-  static final _onFinished = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _onFinished = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JThrowablePtr Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JThrowablePtr Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public abstract void onFinished()`
   void onFinished() {
-    _onFinished(reference.pointer, _id_onFinished as jni.JMethodIDPtr).check();
+    _onFinished(reference.pointer, _id_onFinished as _$jni.JMethodIDPtr)
+        .check();
   }
 
   static final _id_onError = _class.instanceMethodId(
@@ -100,38 +110,36 @@ class DiscoveryHandlerBluetooth extends jni.JObject {
     r'(Ljava/lang/String;)V',
   );
 
-  static final _onError = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _onError = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public abstract void onError(java.lang.String string)`
   void onError(
-    jni.JString string,
+    _$jni.JString string,
   ) {
-    _onError(reference.pointer, _id_onError as jni.JMethodIDPtr,
+    _onError(reference.pointer, _id_onError as _$jni.JMethodIDPtr,
             string.reference.pointer)
         .check();
   }
 
   /// Maps a specific port to the implemented interface.
-  static final Map<int, $DiscoveryHandlerBluetoothImpl> _$impls = {};
-  ReceivePort? _$p;
-
-  static jni.JObjectPtr _$invoke(
+  static final _$core.Map<int, $DiscoveryHandlerBluetooth> _$impls = {};
+  static _$jni.JObjectPtr _$invoke(
     int port,
-    jni.JObjectPtr descriptor,
-    jni.JObjectPtr args,
+    _$jni.JObjectPtr descriptor,
+    _$jni.JObjectPtr args,
   ) {
     return _$invokeMethod(
       port,
-      $MethodInvocation.fromAddresses(
+      _$jni.MethodInvocation.fromAddresses(
         0,
         descriptor.address,
         args.address,
@@ -139,15 +147,15 @@ class DiscoveryHandlerBluetooth extends jni.JObject {
     );
   }
 
-  static final ffi.Pointer<
-          ffi.NativeFunction<
-              jni.JObjectPtr Function(
-                  ffi.Uint64, jni.JObjectPtr, jni.JObjectPtr)>>
-      _$invokePointer = ffi.Pointer.fromFunction(_$invoke);
+  static final _$jni.Pointer<
+          _$jni.NativeFunction<
+              _$jni.JObjectPtr Function(
+                  _$jni.Int64, _$jni.JObjectPtr, _$jni.JObjectPtr)>>
+      _$invokePointer = _$jni.Pointer.fromFunction(_$invoke);
 
-  static ffi.Pointer<ffi.Void> _$invokeMethod(
+  static _$jni.Pointer<_$jni.Void> _$invokeMethod(
     int $p,
-    $MethodInvocation $i,
+    _$jni.MethodInvocation $i,
   ) {
     try {
       final $d = $i.methodDescriptor.toDartString(releaseOriginal: true);
@@ -155,82 +163,104 @@ class DiscoveryHandlerBluetooth extends jni.JObject {
       if ($d ==
           r'onFound(Lcom/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth;)V') {
         _$impls[$p]!.onFound(
-          $a[0].castTo(
+          $a[0].as(
               const discoveredprinterbluetooth_
-                  .$DiscoveredPrinterBluetoothType(),
+                  .$DiscoveredPrinterBluetooth$Type(),
               releaseOriginal: true),
         );
-        return jni.nullptr;
+        return _$jni.nullptr;
       }
       if ($d == r'onFinished()V') {
         _$impls[$p]!.onFinished();
-        return jni.nullptr;
+        return _$jni.nullptr;
       }
       if ($d == r'onError(Ljava/lang/String;)V') {
         _$impls[$p]!.onError(
-          $a[0].castTo(const jni.JStringType(), releaseOriginal: true),
+          $a[0].as(const _$jni.JStringType(), releaseOriginal: true),
         );
-        return jni.nullptr;
+        return _$jni.nullptr;
       }
     } catch (e) {
-      return ProtectedJniExtensions.newDartException(e);
+      return _$jni.ProtectedJniExtensions.newDartException(e);
     }
-    return jni.nullptr;
+    return _$jni.nullptr;
   }
 
-  factory DiscoveryHandlerBluetooth.implement(
-    $DiscoveryHandlerBluetoothImpl $impl,
+  static void implementIn(
+    _$jni.JImplementer implementer,
+    $DiscoveryHandlerBluetooth $impl,
   ) {
-    final $p = ReceivePort();
-    final $x = DiscoveryHandlerBluetooth.fromReference(
-      ProtectedJniExtensions.newPortProxy(
-        r'co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth',
-        $p,
-        _$invokePointer,
-      ),
-    ).._$p = $p;
-    final $a = $p.sendPort.nativePort;
-    _$impls[$a] = $impl;
-    $p.listen(($m) {
+    late final _$jni.RawReceivePort $p;
+    $p = _$jni.RawReceivePort(($m) {
       if ($m == null) {
         _$impls.remove($p.sendPort.nativePort);
         $p.close();
         return;
       }
-      final $i = $MethodInvocation.fromMessage($m as List<dynamic>);
+      final $i = _$jni.MethodInvocation.fromMessage($m);
       final $r = _$invokeMethod($p.sendPort.nativePort, $i);
-      ProtectedJniExtensions.returnResult($i.result, $r);
+      _$jni.ProtectedJniExtensions.returnResult($i.result, $r);
     });
-    return $x;
+    implementer.add(
+      r'co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth',
+      $p,
+      _$invokePointer,
+      [
+        if ($impl.onFound$async)
+          r'onFound(Lcom/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth;)V',
+        if ($impl.onFinished$async) r'onFinished()V',
+        if ($impl.onError$async) r'onError(Ljava/lang/String;)V',
+      ],
+    );
+    final $a = $p.sendPort.nativePort;
+    _$impls[$a] = $impl;
+  }
+
+  factory DiscoveryHandlerBluetooth.implement(
+    $DiscoveryHandlerBluetooth $impl,
+  ) {
+    final $i = _$jni.JImplementer();
+    implementIn($i, $impl);
+    return DiscoveryHandlerBluetooth.fromReference(
+      $i.implementReference(),
+    );
   }
 }
 
-abstract interface class $DiscoveryHandlerBluetoothImpl {
-  factory $DiscoveryHandlerBluetoothImpl({
+abstract base mixin class $DiscoveryHandlerBluetooth {
+  factory $DiscoveryHandlerBluetooth({
     required void Function(
             discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
                 discoveredPrinterBluetooth)
         onFound,
+    bool onFound$async,
     required void Function() onFinished,
-    required void Function(jni.JString string) onError,
-  }) = _$DiscoveryHandlerBluetoothImpl;
+    bool onFinished$async,
+    required void Function(_$jni.JString string) onError,
+    bool onError$async,
+  }) = _$DiscoveryHandlerBluetooth;
 
   void onFound(
       discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
           discoveredPrinterBluetooth);
+  bool get onFound$async => false;
   void onFinished();
-  void onError(jni.JString string);
+  bool get onFinished$async => false;
+  void onError(_$jni.JString string);
+  bool get onError$async => false;
 }
 
-class _$DiscoveryHandlerBluetoothImpl
-    implements $DiscoveryHandlerBluetoothImpl {
-  _$DiscoveryHandlerBluetoothImpl({
+final class _$DiscoveryHandlerBluetooth with $DiscoveryHandlerBluetooth {
+  _$DiscoveryHandlerBluetooth({
     required void Function(
             discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
                 discoveredPrinterBluetooth)
         onFound,
+    this.onFound$async = false,
     required void Function() onFinished,
-    required void Function(jni.JString string) onError,
+    this.onFinished$async = false,
+    required void Function(_$jni.JString string) onError,
+    this.onError$async = false,
   })  : _onFound = onFound,
         _onFinished = onFinished,
         _onError = onError;
@@ -238,8 +268,11 @@ class _$DiscoveryHandlerBluetoothImpl
   final void Function(
       discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
           discoveredPrinterBluetooth) _onFound;
+  final bool onFound$async;
   final void Function() _onFinished;
-  final void Function(jni.JString string) _onError;
+  final bool onFinished$async;
+  final void Function(_$jni.JString string) _onError;
+  final bool onError$async;
 
   void onFound(
       discoveredprinterbluetooth_.DiscoveredPrinterBluetooth
@@ -251,35 +284,40 @@ class _$DiscoveryHandlerBluetoothImpl
     return _onFinished();
   }
 
-  void onError(jni.JString string) {
+  void onError(_$jni.JString string) {
     return _onError(string);
   }
 }
 
-final class $DiscoveryHandlerBluetoothType
-    extends jni.JObjType<DiscoveryHandlerBluetooth> {
-  const $DiscoveryHandlerBluetoothType();
+final class $DiscoveryHandlerBluetooth$Type
+    extends _$jni.JObjType<DiscoveryHandlerBluetooth> {
+  @_$jni.internal
+  const $DiscoveryHandlerBluetooth$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   String get signature =>
       r'Lco/fieldos/zebra_link_os/DiscoveryHandlerBluetooth;';
 
-  @override
-  DiscoveryHandlerBluetooth fromReference(jni.JReference reference) =>
+  @_$jni.internal
+  @_$core.override
+  DiscoveryHandlerBluetooth fromReference(_$jni.JReference reference) =>
       DiscoveryHandlerBluetooth.fromReference(reference);
 
-  @override
-  jni.JObjType get superType => const jni.JObjectType();
+  @_$jni.internal
+  @_$core.override
+  _$jni.JObjType get superType => const _$jni.JObjectType();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   final superCount = 1;
 
-  @override
-  int get hashCode => ($DiscoveryHandlerBluetoothType).hashCode;
+  @_$core.override
+  int get hashCode => ($DiscoveryHandlerBluetooth$Type).hashCode;
 
-  @override
+  @_$core.override
   bool operator ==(Object other) {
-    return other.runtimeType == ($DiscoveryHandlerBluetoothType) &&
-        other is $DiscoveryHandlerBluetoothType;
+    return other.runtimeType == ($DiscoveryHandlerBluetooth$Type) &&
+        other is $DiscoveryHandlerBluetooth$Type;
   }
 }

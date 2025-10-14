@@ -166,7 +166,7 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPluginBase {
       ));
 }
 
-class _ResultCallbacks implements $ResultCallbacksInterfaceImpl {
+final class _ResultCallbacks with $ResultCallbacksInterface {
   final ValueChanged<String>? onErrorEmitted;
   final ValueChanged<String>? onSuccessEmitted;
 
@@ -182,8 +182,8 @@ class _ResultCallbacks implements $ResultCallbacksInterfaceImpl {
   void onSuccess(JString string) => onSuccessEmitted?.call(string.toDartString());
 }
 
-class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase
-    implements $DiscoveryHandlerBluetoothImpl {
+final class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase
+    with $DiscoveryHandlerBluetooth {
   _DiscoveryHandlerBluetooth({
     super.onFoundPrinter,
     super.onDiscoveryFinished,

@@ -9,12 +9,18 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
+// ignore_for_file: inference_failure_on_untyped_parameter
+// ignore_for_file: invalid_internal_annotation
+// ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: library_prefixes
 // ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: only_throw_errors
 // ignore_for_file: overridden_fields
 // ignore_for_file: prefer_double_quotes
+// ignore_for_file: unintended_html_in_doc_comment
 // ignore_for_file: unnecessary_cast
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: unused_element
@@ -24,52 +30,55 @@
 // ignore_for_file: unused_shown_name
 // ignore_for_file: use_super_parameters
 
-import 'dart:ffi' as ffi;
-import 'dart:isolate' show ReceivePort;
+import 'dart:core' show Object, String, bool, double, int;
+import 'dart:core' as _$core;
 
-import 'package:jni/internal_helpers_for_jnigen.dart';
-import 'package:jni/jni.dart' as jni;
+import 'package:jni/_internal.dart' as _$jni;
+import 'package:jni/jni.dart' as _$jni;
 
 import 'DiscoveryHandlerBluetooth.dart' as discoveryhandlerbluetooth_;
 
 import 'ResultCallbacksInterface.dart' as resultcallbacksinterface_;
 
 /// from: `co.fieldos.zebra_link_os.ZebraLinkOsPlugin`
-class ZebraLinkOsPlugin extends jni.JObject {
-  @override
-  late final jni.JObjType<ZebraLinkOsPlugin> $type = type;
+class ZebraLinkOsPlugin extends _$jni.JObject {
+  @_$jni.internal
+  @_$core.override
+  final _$jni.JObjType<ZebraLinkOsPlugin> $type;
 
+  @_$jni.internal
   ZebraLinkOsPlugin.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    _$jni.JReference reference,
+  )   : $type = type,
+        super.fromReference(reference);
 
   static final _class =
-      jni.JClass.forName(r'co/fieldos/zebra_link_os/ZebraLinkOsPlugin');
+      _$jni.JClass.forName(r'co/fieldos/zebra_link_os/ZebraLinkOsPlugin');
 
   /// The type which includes information such as the signature of this class.
-  static const type = $ZebraLinkOsPluginType();
-  static final _id_new0 = _class.constructorId(
+  static const type = $ZebraLinkOsPlugin$Type();
+  static final _id_new$ = _class.constructorId(
     r'(Landroid/content/Context;)V',
   );
 
-  static final _new0 = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JniResult Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _new$ = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JniResult Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_NewObject')
       .asFunction<
-          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JniResult Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public void <init>(android.content.Context context)`
   /// The returned object must be released after use, by calling the [release] method.
   factory ZebraLinkOsPlugin(
-    jni.JObject context,
+    _$jni.JObject context,
   ) {
-    return ZebraLinkOsPlugin.fromReference(_new0(_class.reference.pointer,
-            _id_new0 as jni.JMethodIDPtr, context.reference.pointer)
+    return ZebraLinkOsPlugin.fromReference(_new$(_class.reference.pointer,
+            _id_new$ as _$jni.JMethodIDPtr, context.reference.pointer)
         .reference);
   }
 
@@ -78,28 +87,31 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V',
   );
 
-  static final _connect = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
+  static final _connect = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JThrowablePtr Function(
+                  _$jni.Pointer<_$jni.Void>,
+                  _$jni.JMethodIDPtr,
+                  _$jni.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Pointer<_$jni.Void>
                       )>)>>('globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr,
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void connect(java.lang.String string, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)`
   void connect(
-    jni.JString string,
+    _$jni.JString string,
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
     _connect(
             reference.pointer,
-            _id_connect as jni.JMethodIDPtr,
+            _id_connect as _$jni.JMethodIDPtr,
             string.reference.pointer,
             resultCallbacksInterface.reference.pointer)
         .check();
@@ -110,22 +122,22 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V',
   );
 
-  static final _disconnect = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _disconnect = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void disconnect(co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)`
   void disconnect(
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
-    _disconnect(reference.pointer, _id_disconnect as jni.JMethodIDPtr,
+    _disconnect(reference.pointer, _id_disconnect as _$jni.JMethodIDPtr,
             resultCallbacksInterface.reference.pointer)
         .check();
   }
@@ -135,23 +147,23 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Lco/fieldos/zebra_link_os/DiscoveryHandlerBluetooth;)V',
   );
 
-  static final _startDiscovery = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _startDiscovery = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void startDiscovery(co.fieldos.zebra_link_os.DiscoveryHandlerBluetooth discoveryHandlerBluetooth)`
   void startDiscovery(
     discoveryhandlerbluetooth_.DiscoveryHandlerBluetooth
         discoveryHandlerBluetooth,
   ) {
-    _startDiscovery(reference.pointer, _id_startDiscovery as jni.JMethodIDPtr,
+    _startDiscovery(reference.pointer, _id_startDiscovery as _$jni.JMethodIDPtr,
             discoveryHandlerBluetooth.reference.pointer)
         .check();
   }
@@ -161,36 +173,36 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Ljava/lang/String;IIIIILco/fieldos/zebra_link_os/ResultCallbacksInterface;)V',
   );
 
-  static final _printImage = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
+  static final _printImage = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JThrowablePtr Function(
+                  _$jni.Pointer<_$jni.Void>,
+                  _$jni.JMethodIDPtr,
+                  _$jni.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
-                        $Int32,
-                        $Int32,
-                        $Int32,
-                        $Int32,
-                        $Int32,
-                        ffi.Pointer<ffi.Void>
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Int32,
+                        _$jni.Int32,
+                        _$jni.Int32,
+                        _$jni.Int32,
+                        _$jni.Int32,
+                        _$jni.Pointer<_$jni.Void>
                       )>)>>('globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(
-              ffi.Pointer<ffi.Void>,
-              jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>,
+          _$jni.JThrowablePtr Function(
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr,
+              _$jni.Pointer<_$jni.Void>,
               int,
               int,
               int,
               int,
               int,
-              ffi.Pointer<ffi.Void>)>();
+              _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void printImage(java.lang.String string, int i, int i1, int i2, int i3, int i4, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)`
   void printImage(
-    jni.JString string,
+    _$jni.JString string,
     int i,
     int i1,
     int i2,
@@ -200,7 +212,7 @@ class ZebraLinkOsPlugin extends jni.JObject {
   ) {
     _printImage(
             reference.pointer,
-            _id_printImage as jni.JMethodIDPtr,
+            _id_printImage as _$jni.JMethodIDPtr,
             string.reference.pointer,
             i,
             i1,
@@ -216,40 +228,40 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Ljava/lang/String;Ljava/lang/String;IILco/fieldos/zebra_link_os/ResultCallbacksInterface;)V',
   );
 
-  static final _storeImage = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
+  static final _storeImage = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JThrowablePtr Function(
+                  _$jni.Pointer<_$jni.Void>,
+                  _$jni.JMethodIDPtr,
+                  _$jni.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>,
-                        $Int32,
-                        $Int32,
-                        ffi.Pointer<ffi.Void>
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Int32,
+                        _$jni.Int32,
+                        _$jni.Pointer<_$jni.Void>
                       )>)>>('globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(
-              ffi.Pointer<ffi.Void>,
-              jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>,
-              ffi.Pointer<ffi.Void>,
+          _$jni.JThrowablePtr Function(
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr,
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.Pointer<_$jni.Void>,
               int,
               int,
-              ffi.Pointer<ffi.Void>)>();
+              _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void storeImage(java.lang.String string, java.lang.String string1, int i, int i1, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)`
   void storeImage(
-    jni.JString string,
-    jni.JString string1,
+    _$jni.JString string,
+    _$jni.JString string1,
     int i,
     int i1,
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
     _storeImage(
             reference.pointer,
-            _id_storeImage as jni.JMethodIDPtr,
+            _id_storeImage as _$jni.JMethodIDPtr,
             string.reference.pointer,
             string1.reference.pointer,
             i,
@@ -263,56 +275,64 @@ class ZebraLinkOsPlugin extends jni.JObject {
     r'(Ljava/lang/String;Lco/fieldos/zebra_link_os/ResultCallbacksInterface;)V',
   );
 
-  static final _write = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JThrowablePtr Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
+  static final _write = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JThrowablePtr Function(
+                  _$jni.Pointer<_$jni.Void>,
+                  _$jni.JMethodIDPtr,
+                  _$jni.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Pointer<_$jni.Void>
                       )>)>>('globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr,
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public final void write(java.lang.String string, co.fieldos.zebra_link_os.ResultCallbacksInterface resultCallbacksInterface)`
   void write(
-    jni.JString string,
+    _$jni.JString string,
     resultcallbacksinterface_.ResultCallbacksInterface resultCallbacksInterface,
   ) {
     _write(
             reference.pointer,
-            _id_write as jni.JMethodIDPtr,
+            _id_write as _$jni.JMethodIDPtr,
             string.reference.pointer,
             resultCallbacksInterface.reference.pointer)
         .check();
   }
 }
 
-final class $ZebraLinkOsPluginType extends jni.JObjType<ZebraLinkOsPlugin> {
-  const $ZebraLinkOsPluginType();
+final class $ZebraLinkOsPlugin$Type extends _$jni.JObjType<ZebraLinkOsPlugin> {
+  @_$jni.internal
+  const $ZebraLinkOsPlugin$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   String get signature => r'Lco/fieldos/zebra_link_os/ZebraLinkOsPlugin;';
 
-  @override
-  ZebraLinkOsPlugin fromReference(jni.JReference reference) =>
+  @_$jni.internal
+  @_$core.override
+  ZebraLinkOsPlugin fromReference(_$jni.JReference reference) =>
       ZebraLinkOsPlugin.fromReference(reference);
 
-  @override
-  jni.JObjType get superType => const jni.JObjectType();
+  @_$jni.internal
+  @_$core.override
+  _$jni.JObjType get superType => const _$jni.JObjectType();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   final superCount = 1;
 
-  @override
-  int get hashCode => ($ZebraLinkOsPluginType).hashCode;
+  @_$core.override
+  int get hashCode => ($ZebraLinkOsPlugin$Type).hashCode;
 
-  @override
+  @_$core.override
   bool operator ==(Object other) {
-    return other.runtimeType == ($ZebraLinkOsPluginType) &&
-        other is $ZebraLinkOsPluginType;
+    return other.runtimeType == ($ZebraLinkOsPlugin$Type) &&
+        other is $ZebraLinkOsPlugin$Type;
   }
 }

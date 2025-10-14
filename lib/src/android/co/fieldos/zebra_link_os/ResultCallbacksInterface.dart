@@ -9,12 +9,18 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
+// ignore_for_file: inference_failure_on_untyped_parameter
+// ignore_for_file: invalid_internal_annotation
+// ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: library_prefixes
 // ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: only_throw_errors
 // ignore_for_file: overridden_fields
 // ignore_for_file: prefer_double_quotes
+// ignore_for_file: unintended_html_in_doc_comment
 // ignore_for_file: unnecessary_cast
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: unused_element
@@ -24,47 +30,50 @@
 // ignore_for_file: unused_shown_name
 // ignore_for_file: use_super_parameters
 
-import 'dart:ffi' as ffi;
-import 'dart:isolate' show ReceivePort;
+import 'dart:core' show Object, String, bool, double, int;
+import 'dart:core' as _$core;
 
-import 'package:jni/internal_helpers_for_jnigen.dart';
-import 'package:jni/jni.dart' as jni;
+import 'package:jni/_internal.dart' as _$jni;
+import 'package:jni/jni.dart' as _$jni;
 
 /// from: `co.fieldos.zebra_link_os.ResultCallbacksInterface`
-class ResultCallbacksInterface extends jni.JObject {
-  @override
-  late final jni.JObjType<ResultCallbacksInterface> $type = type;
+class ResultCallbacksInterface extends _$jni.JObject {
+  @_$jni.internal
+  @_$core.override
+  final _$jni.JObjType<ResultCallbacksInterface> $type;
 
+  @_$jni.internal
   ResultCallbacksInterface.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    _$jni.JReference reference,
+  )   : $type = type,
+        super.fromReference(reference);
 
-  static final _class =
-      jni.JClass.forName(r'co/fieldos/zebra_link_os/ResultCallbacksInterface');
+  static final _class = _$jni.JClass.forName(
+      r'co/fieldos/zebra_link_os/ResultCallbacksInterface');
 
   /// The type which includes information such as the signature of this class.
-  static const type = $ResultCallbacksInterfaceType();
+  static const type = $ResultCallbacksInterface$Type();
   static final _id_onSuccess = _class.instanceMethodId(
     r'onSuccess',
     r'(Ljava/lang/String;)V',
   );
 
-  static final _onSuccess = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _onSuccess = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public abstract void onSuccess(java.lang.String string)`
   void onSuccess(
-    jni.JString string,
+    _$jni.JString string,
   ) {
-    _onSuccess(reference.pointer, _id_onSuccess as jni.JMethodIDPtr,
+    _onSuccess(reference.pointer, _id_onSuccess as _$jni.JMethodIDPtr,
             string.reference.pointer)
         .check();
   }
@@ -74,38 +83,36 @@ class ResultCallbacksInterface extends jni.JObject {
     r'(Ljava/lang/String;)V',
   );
 
-  static final _onError = ProtectedJniExtensions.lookup<
-              ffi.NativeFunction<
-                  jni.JThrowablePtr Function(
-                      ffi.Pointer<ffi.Void>,
-                      jni.JMethodIDPtr,
-                      ffi.VarArgs<(ffi.Pointer<ffi.Void>,)>)>>(
+  static final _onError = _$jni.ProtectedJniExtensions.lookup<
+              _$jni.NativeFunction<
+                  _$jni.JThrowablePtr Function(
+                      _$jni.Pointer<_$jni.Void>,
+                      _$jni.JMethodIDPtr,
+                      _$jni.VarArgs<(_$jni.Pointer<_$jni.Void>,)>)>>(
           'globalEnv_CallVoidMethod')
       .asFunction<
-          jni.JThrowablePtr Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>)>();
+          _$jni.JThrowablePtr Function(_$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr, _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public abstract void onError(java.lang.String string)`
   void onError(
-    jni.JString string,
+    _$jni.JString string,
   ) {
-    _onError(reference.pointer, _id_onError as jni.JMethodIDPtr,
+    _onError(reference.pointer, _id_onError as _$jni.JMethodIDPtr,
             string.reference.pointer)
         .check();
   }
 
   /// Maps a specific port to the implemented interface.
-  static final Map<int, $ResultCallbacksInterfaceImpl> _$impls = {};
-  ReceivePort? _$p;
-
-  static jni.JObjectPtr _$invoke(
+  static final _$core.Map<int, $ResultCallbacksInterface> _$impls = {};
+  static _$jni.JObjectPtr _$invoke(
     int port,
-    jni.JObjectPtr descriptor,
-    jni.JObjectPtr args,
+    _$jni.JObjectPtr descriptor,
+    _$jni.JObjectPtr args,
   ) {
     return _$invokeMethod(
       port,
-      $MethodInvocation.fromAddresses(
+      _$jni.MethodInvocation.fromAddresses(
         0,
         descriptor.address,
         args.address,
@@ -113,117 +120,142 @@ class ResultCallbacksInterface extends jni.JObject {
     );
   }
 
-  static final ffi.Pointer<
-          ffi.NativeFunction<
-              jni.JObjectPtr Function(
-                  ffi.Uint64, jni.JObjectPtr, jni.JObjectPtr)>>
-      _$invokePointer = ffi.Pointer.fromFunction(_$invoke);
+  static final _$jni.Pointer<
+          _$jni.NativeFunction<
+              _$jni.JObjectPtr Function(
+                  _$jni.Int64, _$jni.JObjectPtr, _$jni.JObjectPtr)>>
+      _$invokePointer = _$jni.Pointer.fromFunction(_$invoke);
 
-  static ffi.Pointer<ffi.Void> _$invokeMethod(
+  static _$jni.Pointer<_$jni.Void> _$invokeMethod(
     int $p,
-    $MethodInvocation $i,
+    _$jni.MethodInvocation $i,
   ) {
     try {
       final $d = $i.methodDescriptor.toDartString(releaseOriginal: true);
       final $a = $i.args;
       if ($d == r'onSuccess(Ljava/lang/String;)V') {
         _$impls[$p]!.onSuccess(
-          $a[0].castTo(const jni.JStringType(), releaseOriginal: true),
+          $a[0].as(const _$jni.JStringType(), releaseOriginal: true),
         );
-        return jni.nullptr;
+        return _$jni.nullptr;
       }
       if ($d == r'onError(Ljava/lang/String;)V') {
         _$impls[$p]!.onError(
-          $a[0].castTo(const jni.JStringType(), releaseOriginal: true),
+          $a[0].as(const _$jni.JStringType(), releaseOriginal: true),
         );
-        return jni.nullptr;
+        return _$jni.nullptr;
       }
     } catch (e) {
-      return ProtectedJniExtensions.newDartException(e);
+      return _$jni.ProtectedJniExtensions.newDartException(e);
     }
-    return jni.nullptr;
+    return _$jni.nullptr;
   }
 
-  factory ResultCallbacksInterface.implement(
-    $ResultCallbacksInterfaceImpl $impl,
+  static void implementIn(
+    _$jni.JImplementer implementer,
+    $ResultCallbacksInterface $impl,
   ) {
-    final $p = ReceivePort();
-    final $x = ResultCallbacksInterface.fromReference(
-      ProtectedJniExtensions.newPortProxy(
-        r'co.fieldos.zebra_link_os.ResultCallbacksInterface',
-        $p,
-        _$invokePointer,
-      ),
-    ).._$p = $p;
-    final $a = $p.sendPort.nativePort;
-    _$impls[$a] = $impl;
-    $p.listen(($m) {
+    late final _$jni.RawReceivePort $p;
+    $p = _$jni.RawReceivePort(($m) {
       if ($m == null) {
         _$impls.remove($p.sendPort.nativePort);
         $p.close();
         return;
       }
-      final $i = $MethodInvocation.fromMessage($m as List<dynamic>);
+      final $i = _$jni.MethodInvocation.fromMessage($m);
       final $r = _$invokeMethod($p.sendPort.nativePort, $i);
-      ProtectedJniExtensions.returnResult($i.result, $r);
+      _$jni.ProtectedJniExtensions.returnResult($i.result, $r);
     });
-    return $x;
+    implementer.add(
+      r'co.fieldos.zebra_link_os.ResultCallbacksInterface',
+      $p,
+      _$invokePointer,
+      [
+        if ($impl.onSuccess$async) r'onSuccess(Ljava/lang/String;)V',
+        if ($impl.onError$async) r'onError(Ljava/lang/String;)V',
+      ],
+    );
+    final $a = $p.sendPort.nativePort;
+    _$impls[$a] = $impl;
+  }
+
+  factory ResultCallbacksInterface.implement(
+    $ResultCallbacksInterface $impl,
+  ) {
+    final $i = _$jni.JImplementer();
+    implementIn($i, $impl);
+    return ResultCallbacksInterface.fromReference(
+      $i.implementReference(),
+    );
   }
 }
 
-abstract interface class $ResultCallbacksInterfaceImpl {
-  factory $ResultCallbacksInterfaceImpl({
-    required void Function(jni.JString string) onSuccess,
-    required void Function(jni.JString string) onError,
-  }) = _$ResultCallbacksInterfaceImpl;
+abstract base mixin class $ResultCallbacksInterface {
+  factory $ResultCallbacksInterface({
+    required void Function(_$jni.JString string) onSuccess,
+    bool onSuccess$async,
+    required void Function(_$jni.JString string) onError,
+    bool onError$async,
+  }) = _$ResultCallbacksInterface;
 
-  void onSuccess(jni.JString string);
-  void onError(jni.JString string);
+  void onSuccess(_$jni.JString string);
+  bool get onSuccess$async => false;
+  void onError(_$jni.JString string);
+  bool get onError$async => false;
 }
 
-class _$ResultCallbacksInterfaceImpl implements $ResultCallbacksInterfaceImpl {
-  _$ResultCallbacksInterfaceImpl({
-    required void Function(jni.JString string) onSuccess,
-    required void Function(jni.JString string) onError,
+final class _$ResultCallbacksInterface with $ResultCallbacksInterface {
+  _$ResultCallbacksInterface({
+    required void Function(_$jni.JString string) onSuccess,
+    this.onSuccess$async = false,
+    required void Function(_$jni.JString string) onError,
+    this.onError$async = false,
   })  : _onSuccess = onSuccess,
         _onError = onError;
 
-  final void Function(jni.JString string) _onSuccess;
-  final void Function(jni.JString string) _onError;
+  final void Function(_$jni.JString string) _onSuccess;
+  final bool onSuccess$async;
+  final void Function(_$jni.JString string) _onError;
+  final bool onError$async;
 
-  void onSuccess(jni.JString string) {
+  void onSuccess(_$jni.JString string) {
     return _onSuccess(string);
   }
 
-  void onError(jni.JString string) {
+  void onError(_$jni.JString string) {
     return _onError(string);
   }
 }
 
-final class $ResultCallbacksInterfaceType
-    extends jni.JObjType<ResultCallbacksInterface> {
-  const $ResultCallbacksInterfaceType();
+final class $ResultCallbacksInterface$Type
+    extends _$jni.JObjType<ResultCallbacksInterface> {
+  @_$jni.internal
+  const $ResultCallbacksInterface$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   String get signature =>
       r'Lco/fieldos/zebra_link_os/ResultCallbacksInterface;';
 
-  @override
-  ResultCallbacksInterface fromReference(jni.JReference reference) =>
+  @_$jni.internal
+  @_$core.override
+  ResultCallbacksInterface fromReference(_$jni.JReference reference) =>
       ResultCallbacksInterface.fromReference(reference);
 
-  @override
-  jni.JObjType get superType => const jni.JObjectType();
+  @_$jni.internal
+  @_$core.override
+  _$jni.JObjType get superType => const _$jni.JObjectType();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   final superCount = 1;
 
-  @override
-  int get hashCode => ($ResultCallbacksInterfaceType).hashCode;
+  @_$core.override
+  int get hashCode => ($ResultCallbacksInterface$Type).hashCode;
 
-  @override
+  @_$core.override
   bool operator ==(Object other) {
-    return other.runtimeType == ($ResultCallbacksInterfaceType) &&
-        other is $ResultCallbacksInterfaceType;
+    return other.runtimeType == ($ResultCallbacksInterface$Type) &&
+        other is $ResultCallbacksInterface$Type;
   }
 }

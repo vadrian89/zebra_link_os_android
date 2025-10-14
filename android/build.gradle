@@ -35,19 +35,19 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 34
+    compileSdk 35
     if (project.android.hasProperty("namespace")) {
         namespace 'co.fieldos.zebra_link_os_android'
     }
 
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 
     sourceSets {
@@ -61,7 +61,7 @@ android {
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.19.0'
+        testImplementation 'org.mockito:mockito-core:5.20.0'
     }
 
     testOptions {
@@ -86,12 +86,13 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.activity:activity-ktx:1.8.2'
-    def core_version = "1.13.1"
+    implementation 'androidx.activity:activity-ktx:1.10.1'
+    def core_version = "1.16.0"
     // Java language implementation
-    //noinspection KtxExtensionAvailable
+    //noinspection KtxExtensionAvailable,GradleDependency
     implementation "androidx.core:core:$core_version"
     // Kotlin
+    //noinspection GradleDependency
     implementation "androidx.core:core-ktx:$core_version"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     if (flutterJar != null) {

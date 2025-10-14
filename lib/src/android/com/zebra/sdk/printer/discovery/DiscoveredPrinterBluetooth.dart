@@ -9,12 +9,18 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: doc_directive_unknown
 // ignore_for_file: file_names
+// ignore_for_file: inference_failure_on_untyped_parameter
+// ignore_for_file: invalid_internal_annotation
+// ignore_for_file: invalid_use_of_internal_member
+// ignore_for_file: library_prefixes
 // ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: no_leading_underscores_for_library_prefixes
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 // ignore_for_file: non_constant_identifier_names
 // ignore_for_file: only_throw_errors
 // ignore_for_file: overridden_fields
 // ignore_for_file: prefer_double_quotes
+// ignore_for_file: unintended_html_in_doc_comment
 // ignore_for_file: unnecessary_cast
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: unused_element
@@ -24,28 +30,31 @@
 // ignore_for_file: unused_shown_name
 // ignore_for_file: use_super_parameters
 
-import 'dart:ffi' as ffi;
-import 'dart:isolate' show ReceivePort;
+import 'dart:core' show Object, String, bool, double, int;
+import 'dart:core' as _$core;
 
-import 'package:jni/internal_helpers_for_jnigen.dart';
-import 'package:jni/jni.dart' as jni;
+import 'package:jni/_internal.dart' as _$jni;
+import 'package:jni/jni.dart' as _$jni;
 
 import 'DiscoveredPrinter.dart' as discoveredprinter_;
 
 /// from: `com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth`
 class DiscoveredPrinterBluetooth extends discoveredprinter_.DiscoveredPrinter {
-  @override
-  late final jni.JObjType<DiscoveredPrinterBluetooth> $type = type;
+  @_$jni.internal
+  @_$core.override
+  final _$jni.JObjType<DiscoveredPrinterBluetooth> $type;
 
+  @_$jni.internal
   DiscoveredPrinterBluetooth.fromReference(
-    jni.JReference reference,
-  ) : super.fromReference(reference);
+    _$jni.JReference reference,
+  )   : $type = type,
+        super.fromReference(reference);
 
-  static final _class = jni.JClass.forName(
+  static final _class = _$jni.JClass.forName(
       r'com/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth');
 
   /// The type which includes information such as the signature of this class.
-  static const type = $DiscoveredPrinterBluetoothType();
+  static const type = $DiscoveredPrinterBluetooth$Type();
   static final _id_friendlyName = _class.instanceFieldId(
     r'friendlyName',
     r'Ljava/lang/String;',
@@ -53,36 +62,39 @@ class DiscoveredPrinterBluetooth extends discoveredprinter_.DiscoveredPrinter {
 
   /// from: `public final java.lang.String friendlyName`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JString get friendlyName =>
-      _id_friendlyName.get(this, const jni.JStringType());
+  _$jni.JString get friendlyName =>
+      _id_friendlyName.get(this, const _$jni.JStringType());
 
-  static final _id_new1 = _class.constructorId(
+  static final _id_new$ = _class.constructorId(
     r'(Ljava/lang/String;Ljava/lang/String;)V',
   );
 
-  static final _new1 = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                  ffi.Pointer<ffi.Void>,
-                  jni.JMethodIDPtr,
-                  ffi.VarArgs<
+  static final _new$ = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                  _$jni.Pointer<_$jni.Void>,
+                  _$jni.JMethodIDPtr,
+                  _$jni.VarArgs<
                       (
-                        ffi.Pointer<ffi.Void>,
-                        ffi.Pointer<ffi.Void>
+                        _$jni.Pointer<_$jni.Void>,
+                        _$jni.Pointer<_$jni.Void>
                       )>)>>('globalEnv_NewObject')
       .asFunction<
-          jni.JniResult Function(ffi.Pointer<ffi.Void>, jni.JMethodIDPtr,
-              ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Void>)>();
+          _$jni.JniResult Function(
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.JMethodIDPtr,
+              _$jni.Pointer<_$jni.Void>,
+              _$jni.Pointer<_$jni.Void>)>();
 
   /// from: `public void <init>(java.lang.String string, java.lang.String string1)`
   /// The returned object must be released after use, by calling the [release] method.
-  factory DiscoveredPrinterBluetooth.new1(
-    jni.JString string,
-    jni.JString string1,
+  factory DiscoveredPrinterBluetooth(
+    _$jni.JString string,
+    _$jni.JString string1,
   ) {
-    return DiscoveredPrinterBluetooth.fromReference(_new1(
+    return DiscoveredPrinterBluetooth.fromReference(_new$(
             _class.reference.pointer,
-            _id_new1 as jni.JMethodIDPtr,
+            _id_new$ as _$jni.JMethodIDPtr,
             string.reference.pointer,
             string1.reference.pointer)
         .reference);
@@ -93,52 +105,57 @@ class DiscoveredPrinterBluetooth extends discoveredprinter_.DiscoveredPrinter {
     r'()Lcom/zebra/sdk/comm/Connection;',
   );
 
-  static final _getConnection = ProtectedJniExtensions.lookup<
-          ffi.NativeFunction<
-              jni.JniResult Function(
-                ffi.Pointer<ffi.Void>,
-                jni.JMethodIDPtr,
+  static final _getConnection = _$jni.ProtectedJniExtensions.lookup<
+          _$jni.NativeFunction<
+              _$jni.JniResult Function(
+                _$jni.Pointer<_$jni.Void>,
+                _$jni.JMethodIDPtr,
               )>>('globalEnv_CallObjectMethod')
       .asFunction<
-          jni.JniResult Function(
-            ffi.Pointer<ffi.Void>,
-            jni.JMethodIDPtr,
+          _$jni.JniResult Function(
+            _$jni.Pointer<_$jni.Void>,
+            _$jni.JMethodIDPtr,
           )>();
 
   /// from: `public com.zebra.sdk.comm.Connection getConnection()`
   /// The returned object must be released after use, by calling the [release] method.
-  jni.JObject getConnection() {
+  _$jni.JObject getConnection() {
     return _getConnection(
-            reference.pointer, _id_getConnection as jni.JMethodIDPtr)
-        .object(const jni.JObjectType());
+            reference.pointer, _id_getConnection as _$jni.JMethodIDPtr)
+        .object(const _$jni.JObjectType());
   }
 }
 
-final class $DiscoveredPrinterBluetoothType
-    extends jni.JObjType<DiscoveredPrinterBluetooth> {
-  const $DiscoveredPrinterBluetoothType();
+final class $DiscoveredPrinterBluetooth$Type
+    extends _$jni.JObjType<DiscoveredPrinterBluetooth> {
+  @_$jni.internal
+  const $DiscoveredPrinterBluetooth$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   String get signature =>
       r'Lcom/zebra/sdk/printer/discovery/DiscoveredPrinterBluetooth;';
 
-  @override
-  DiscoveredPrinterBluetooth fromReference(jni.JReference reference) =>
+  @_$jni.internal
+  @_$core.override
+  DiscoveredPrinterBluetooth fromReference(_$jni.JReference reference) =>
       DiscoveredPrinterBluetooth.fromReference(reference);
 
-  @override
-  jni.JObjType get superType =>
-      const discoveredprinter_.$DiscoveredPrinterType();
+  @_$jni.internal
+  @_$core.override
+  _$jni.JObjType get superType =>
+      const discoveredprinter_.$DiscoveredPrinter$Type();
 
-  @override
+  @_$jni.internal
+  @_$core.override
   final superCount = 2;
 
-  @override
-  int get hashCode => ($DiscoveredPrinterBluetoothType).hashCode;
+  @_$core.override
+  int get hashCode => ($DiscoveredPrinterBluetooth$Type).hashCode;
 
-  @override
+  @_$core.override
   bool operator ==(Object other) {
-    return other.runtimeType == ($DiscoveredPrinterBluetoothType) &&
-        other is $DiscoveredPrinterBluetoothType;
+    return other.runtimeType == ($DiscoveredPrinterBluetooth$Type) &&
+        other is $DiscoveredPrinterBluetooth$Type;
   }
 }
