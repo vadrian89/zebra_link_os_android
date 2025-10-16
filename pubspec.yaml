@@ -1,6 +1,6 @@
 name: zebra_link_os_android
 description: "A new Flutter plugin project."
-version: 0.0.4
+version: 0.0.5
 # homepage: null
 publish_to: 'none'
 
@@ -23,7 +23,7 @@ dependencies:
   zebra_link_os_platform_core: 
     git: 
       url: https://github.com/vadrian89/zebra_link_os_platform_core
-      ref: ac634b836871f691e401c7056063d857accbaccd
+      ref: 5f4780aad1c1021395b381ea5e474068ecd4dcb9
 
 dev_dependencies:
   flutter_lints: ^3.0.0

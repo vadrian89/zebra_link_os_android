@@ -11,14 +11,10 @@ class PrinterDiscovererBluetooth(
     private val onFinished: () -> Unit,
     private val onError: (error: String) -> Unit
 ) {
-    fun findPrinters(context: Context) {
-        try {
-            BluetoothDiscoverer.findPrinters(context, Handler(onFound, onFinished, onError))
-        } catch (e: Exception) {
-            e.printStackTrace()
-            onError(e.message ?: "Unknown error")
-        }
-    }
+    fun findPrinters(context: Context) = BluetoothDiscoverer.findPrinters(
+        context,
+        Handler(onFound, onFinished, onError),
+        )
 }
 
 private class Handler(

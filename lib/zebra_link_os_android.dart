@@ -35,8 +35,8 @@ class ZebraLinkOsAndroid extends ZebraLinkOsPluginBase {
     _plugin.startDiscovery(
       DiscoveryHandlerBluetooth.implement(
         _DiscoveryHandlerBluetooth(
-          onDiscoveryError: (value) => completer.completeError(ZebraLinkOsException(
-            message: value,
+          onDiscoveryError: (value) => completer.completeError(ZebraLinkOsException.fromString(
+            error: value,
             stackTrace: StackTrace.current,
           )),
           onDiscoveryFinished: () => completer.complete(list),

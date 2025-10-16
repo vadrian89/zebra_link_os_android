@@ -9,11 +9,16 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
+import kotlin.concurrent.thread
 
 
 class ZebraLinkOsPlugin(
     private val context: Context,
 ) {
+    companion object {
+        private var discoveryInProgress: AtomicBoolean = AtomicBoolean(false)
+    }
     private var connection: BluetoothConnection? = null
     private val mainScope = CoroutineScope(Dispatchers.Main)
     private val disconnectCallbacks = object : ResultCallbacksInterface {
@@ -61,11 +66,28 @@ class ZebraLinkOsPlugin(
     }
 
     fun startDiscovery(discoveryHandler: DiscoveryHandlerBluetooth) {
-        mainScope.launch(Dispatchers.Default) {
+        if (discoveryInProgress.get()) {
+            return discoveryHandler.onError("discoveryInProgress")
+        }
+        thread {
+            discoveryInProgress.set(true)
+            Log.d("ZebraLinkOsPlugin", "Starting discovery")
             val discoverer = PrinterDiscovererBluetooth(
                 discoveryHandler::onFound,
-                discoveryHandler::onFinished,
-                discoveryHandler::onError
+                {
+                    if (discoveryInProgress.compareAndSet(true,false)) {
+                        Log.d("ZebraLinkOsPlugin", "Discovery finished")
+                    } else {
+                        Log.w("ZebraLinkOsPlugin", "Discovery was not in progress")
+                    }
+                    discoveryHandler.onFinished()
+                },
+                {
+                    message ->
+                    discoveryHandler.onError(message)
+                    Log.e("ZebraLinkOsPlugin", "Discovery error: $message")
+
+                }
             )
             try {
                 discoverer.findPrinters(context)
