@@ -423,9 +423,9 @@ packages:
     dependency: transitive
     description:
       path: "."
-      ref: "5f4780aad1c1021395b381ea5e474068ecd4dcb9"
+      ref: HEAD
       resolved-ref: "5f4780aad1c1021395b381ea5e474068ecd4dcb9"
-      url: "https://github.com/vadrian89/zebra_link_os_platform_core"
+      url: "https://github.com/vadrian89/zebra_link_os_platform_core.git"
     source: git
     version: "0.0.2"
 sdks:
