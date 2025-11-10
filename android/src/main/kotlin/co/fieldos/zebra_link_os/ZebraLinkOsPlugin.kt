@@ -5,10 +5,7 @@ import android.util.Log
 import com.zebra.sdk.comm.BluetoothConnection
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import java.lang.Thread.sleep
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.concurrent.thread
 
@@ -20,7 +17,7 @@ class ZebraLinkOsPlugin(
         private var discoveryInProgress: AtomicBoolean = AtomicBoolean(false)
     }
     private var connection: BluetoothConnection? = null
-    private val mainScope = CoroutineScope(Dispatchers.Main)
+
     private val disconnectCallbacks = object : ResultCallbacksInterface {
         override fun onSuccess(result: String) {
             Log.d("ZebraLinkOsPlugin", "Disconnected from printer internally")
@@ -36,7 +33,7 @@ class ZebraLinkOsPlugin(
             callbacks.onSuccess(connection!!.macAddress)
             return
         }
-        mainScope.launch {
+        thread {
             try {
                 connection = BluetoothConnection(address)
                 connection!!.open()
@@ -51,7 +48,7 @@ class ZebraLinkOsPlugin(
     }
 
     fun disconnect(callbacks: ResultCallbacksInterface) {
-        mainScope.launch(Dispatchers.Default) {
+        thread {
             try {
                 if (connection?.isConnected == true) connection?.close()
                 callbacks.onSuccess("")
@@ -102,13 +99,13 @@ class ZebraLinkOsPlugin(
 
     /// Print an image to a printer
     fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0, callbacks: ResultCallbacksInterface) {
-        mainScope.launch(Dispatchers.Default) {
+        thread {
             Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
             try {
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
                 val image = ZebraImageAndroid(filePath)
                 effectivePrinter.printImage(image, x, y, width, height, insideFormat == 1)
-                delay(500L)
+                sleep(500L)
                 callbacks.onSuccess("")
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error printing image", e)
@@ -121,12 +118,12 @@ class ZebraLinkOsPlugin(
 
     // Store an image in the printer's memory.
     fun storeImage(filePath: String, deviceDriveAndFileName: String, width: Int = 0, height: Int = 0, callbacks: ResultCallbacksInterface) {
-        mainScope.launch(Dispatchers.Default) {
+        thread {
             Log.d("ZebraLinkOsPlugin", "Storing image: $filePath as $deviceDriveAndFileName")
             try {
                 val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
                 effectivePrinter.storeImage(deviceDriveAndFileName, filePath, width, height)
-                delay(500L)
+                sleep(500L)
                 callbacks.onSuccess("")
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error storing image", e)
@@ -139,11 +136,11 @@ class ZebraLinkOsPlugin(
 
     // Write the string to a printer.
     fun write(string: String, callbacks: ResultCallbacksInterface) {
-        mainScope.launch(Dispatchers.Default) {
+        thread {
             Log.d("ZebraLinkOsPlugin", "Printing: $string")
             try {
                 connection!!.write(string.toByteArray())
-                delay(500L)
+                sleep(500L)
                 callbacks.onSuccess("")
             } catch (e: Exception) {
                 Log.e("ZebraLinkOsPlugin", "Error printing string", e)

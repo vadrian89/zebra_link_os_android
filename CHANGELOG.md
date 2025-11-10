@@ -1,3 +1,6 @@
+## 0.0.6
+* Updated methods to use thread block to run the code
+
 ## 0.0.5
 * Updated zebra_link_os_platform_core version to 0.0.2
 * PrinterDiscovererBluetooth.findPrinters will no longer use a try-catch because it's already in a try-catch block inside ZebraLinkOsPlugin.startDiscovery
