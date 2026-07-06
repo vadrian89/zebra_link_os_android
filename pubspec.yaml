@@ -21,7 +21,8 @@ dependencies:
     sdk: flutter
   jni: ^0.14.2
   zebra_link_os_platform_core: 
-    path: ../zebra_link_os_platform_core
+    git: 
+      url: https://github.com/vadrian89/zebra_link_os_platform_core.git
 
 
 

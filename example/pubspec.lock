@@ -422,9 +422,11 @@ packages:
   zebra_link_os_platform_core:
     dependency: transitive
     description:
-      path: "../../zebra_link_os_platform_core"
-      relative: true
-    source: path
+      path: "."
+      ref: HEAD
+      resolved-ref: "5f4780aad1c1021395b381ea5e474068ecd4dcb9"
+      url: "https://github.com/vadrian89/zebra_link_os_platform_core.git"
+    source: git
     version: "0.0.2"
 sdks:
   dart: ">=3.7.0 <4.0.0"
