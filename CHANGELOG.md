@@ -1,5 +1,9 @@
 ## 0.0.6
-* Updated methods to use thread block to run the code
+* Upgraded Android Gradle plugin version to 8.13.1
+* Upgraded Android compileSdk version to 36
+* Upgraded Android Kotlin version to 2.1.21
+* Updated example permissions_handler version to 12.0.1
+* Updated example path_provider version to 2.1.5
 
 ## 0.0.5
 * Updated zebra_link_os_platform_core version to 0.0.2
