@@ -12,14 +12,14 @@ if (localPropertiesFile.exists()) {
 def flutterJar = localProperties.getProperty('flutter.jar')
 
 buildscript {
-    ext.kotlin_version = '1.8.22'
+    ext.kotlin_version = '2.1.21'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.9.3'
+        classpath 'com.android.tools.build:gradle:8.13.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -35,19 +35,14 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 35
+    compileSdk 36
     if (project.android.hasProperty("namespace")) {
         namespace 'co.fieldos.zebra_link_os_android'
     }
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = '17'
     }
 
     sourceSets {
@@ -61,7 +56,7 @@ android {
 
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.20.0'
+        testImplementation 'org.mockito:mockito-core:5.21.0'
     }
 
     testOptions {
@@ -86,7 +81,7 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.activity:activity-ktx:1.10.1'
+    implementation 'androidx.activity:activity-ktx:1.11.0'
     def core_version = "1.16.0"
     // Java language implementation
     //noinspection KtxExtensionAvailable,GradleDependency
