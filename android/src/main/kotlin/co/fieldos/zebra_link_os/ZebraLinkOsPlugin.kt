@@ -6,8 +6,8 @@ import com.zebra.sdk.comm.BluetoothConnection
 import com.zebra.sdk.graphics.internal.ZebraImageAndroid
 import com.zebra.sdk.printer.ZebraPrinterFactory
 import java.lang.Thread.sleep
+import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
-import kotlin.concurrent.thread
 
 
 class ZebraLinkOsPlugin(
@@ -18,6 +18,14 @@ class ZebraLinkOsPlugin(
     }
     private var connection: BluetoothConnection? = null
 
+    // Single background thread so that all printer operations run off the
+    // Flutter platform/UI thread (which are merged since Flutter 3.29) and are
+    // serialized (a BluetoothConnection is not thread-safe). The worker is a
+    // daemon thread so it never keeps the process alive on its own.
+    private val executor = Executors.newSingleThreadExecutor { r ->
+        Thread(r, "ZebraLinkOsPlugin").apply { isDaemon = true }
+    }
+
     private val disconnectCallbacks = object : ResultCallbacksInterface {
         override fun onSuccess(result: String) {
             Log.d("ZebraLinkOsPlugin", "Disconnected from printer internally")
@@ -27,11 +35,11 @@ class ZebraLinkOsPlugin(
         }
     }
 
-    fun connect(address: String, callbacks: ResultCallbacksInterface) {
+    fun connect(address: String, callbacks: ResultCallbacksInterface) = executor.execute {
         if (connection?.macAddress == address || connection?.isConnected == true) {
             Log.d("ZebraLinkOsPlugin", "Already connected to printer")
             callbacks.onSuccess(connection!!.macAddress)
-            return
+            return@execute
         }
         try {
             connection = BluetoothConnection(address)
@@ -45,7 +53,7 @@ class ZebraLinkOsPlugin(
         }
     }
 
-    fun disconnect(callbacks: ResultCallbacksInterface) {
+    fun disconnect(callbacks: ResultCallbacksInterface) = executor.execute {
         try {
             if (connection?.isConnected == true) connection?.close()
             callbacks.onSuccess("")
@@ -58,9 +66,9 @@ class ZebraLinkOsPlugin(
         Log.d("ZebraLinkOsPlugin", "Disconnected from printer")
     }
 
-    fun startDiscovery(discoveryHandler: DiscoveryHandlerBluetooth) {
+    fun startDiscovery(discoveryHandler: DiscoveryHandlerBluetooth) = executor.execute {
         if (discoveryInProgress.get()) {
-            return discoveryHandler.onError("discoveryInProgress")
+            return@execute discoveryHandler.onError("discoveryInProgress")
         }
         discoveryInProgress.set(true)
         Log.d("ZebraLinkOsPlugin", "Starting discovery")
@@ -84,6 +92,7 @@ class ZebraLinkOsPlugin(
         try {
             discoverer.findPrinters(context)
         } catch (e: Exception) {
+            discoveryInProgress.set(false)
             discoveryHandler.onError("Unknown error")
             Log.e("ZebraLinkOsPlugin", "Error finding printers", e)
             e.printStackTrace()
@@ -92,7 +101,7 @@ class ZebraLinkOsPlugin(
     }
 
     /// Print an image to a printer
-    fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0, callbacks: ResultCallbacksInterface) {
+    fun printImage(filePath: String, x: Int = 0, y: Int = 0, width: Int = 0, height: Int = 0, insideFormat: Int = 0, callbacks: ResultCallbacksInterface) = executor.execute {
         Log.d("ZebraLinkOsPlugin", "Printing: $filePath")
         try {
             val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
@@ -109,7 +118,7 @@ class ZebraLinkOsPlugin(
     }
 
     // Store an image in the printer's memory.
-    fun storeImage(filePath: String, deviceDriveAndFileName: String, width: Int = 0, height: Int = 0, callbacks: ResultCallbacksInterface) {
+    fun storeImage(filePath: String, deviceDriveAndFileName: String, width: Int = 0, height: Int = 0, callbacks: ResultCallbacksInterface) = executor.execute {
         Log.d("ZebraLinkOsPlugin", "Storing image: $filePath as $deviceDriveAndFileName")
         try {
             val effectivePrinter = ZebraPrinterFactory.getInstance(connection)
@@ -125,7 +134,7 @@ class ZebraLinkOsPlugin(
     }
 
     // Write the string to a printer.
-    fun write(string: String, callbacks: ResultCallbacksInterface) {
+    fun write(string: String, callbacks: ResultCallbacksInterface) = executor.execute {
         Log.d("ZebraLinkOsPlugin", "Printing: $string")
         try {
             connection!!.write(string.toByteArray())
@@ -137,6 +146,11 @@ class ZebraLinkOsPlugin(
             callbacks.onError(e.message ?: "Unknown error")
             disconnect(disconnectCallbacks)
         }
+    }
+
+    // Release the background executor when the plugin is no longer needed.
+    fun dispose() {
+        executor.shutdown()
     }
 }
 

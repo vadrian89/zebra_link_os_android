@@ -171,6 +171,12 @@ final class _ResultCallbacks with $ResultCallbacksInterface {
   final ValueChanged<String>? onErrorEmitted;
   final ValueChanged<String>? onSuccessEmitted;
 
+  @override
+  bool get onSuccess$async => true;
+
+  @override
+  bool get onError$async => true;
+
   const _ResultCallbacks({
     this.onErrorEmitted,
     this.onSuccessEmitted,
@@ -190,6 +196,16 @@ final class _DiscoveryHandlerBluetooth extends DiscoveryHandlerBase
     super.onDiscoveryFinished,
     super.onDiscoveryError,
   });
+
+  // The Zebra SDK invokes these callbacks from its own discovery thread, so
+  // dispatch them through the isolate's event loop rather than inline on that
+  // foreign thread (see _ResultCallbacks for the rationale).
+  @override
+  bool get onFound$async => true;
+  @override
+  bool get onFinished$async => true;
+  @override
+  bool get onError$async => true;
 
   @override
   void onError(JString string) => onDiscoveryError?.call(string.toDartString());
