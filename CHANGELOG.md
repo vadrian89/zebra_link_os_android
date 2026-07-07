@@ -1,5 +1,10 @@
+## 0.0.7
+* Updated ZebraLinkOsPlugin (Kotlin) to use executer for running functions
+* Updated Dart callbacks to enable them to work async 
+* Increased Flutter SDK requirement, to 3.32.0, to match the jni/jnigen packages requirements
+
 ## 0.0.6
-* Upgraded Android Gradle plugin version to 8.13.1
+* Upgraded Android Gradle plugin version to 8.13.2
 * Upgraded Android compileSdk version to 36
 * Upgraded Android Kotlin version to 2.1.21
 * Updated example permissions_handler version to 12.0.1
